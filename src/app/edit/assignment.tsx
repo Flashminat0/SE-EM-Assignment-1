@@ -57,6 +57,7 @@ export default function EditAssignment() {
       notes: notes.trim(),
       done: existing?.done ?? 0,
       imageUri: kept ?? existing?.imageUri ?? null,
+      createdAt: existing?.createdAt || Date.now(),
     });
     if (kept && existing?.imageUri) deletePhoto(existing.imageUri);
     const course = get('courses', courseId);

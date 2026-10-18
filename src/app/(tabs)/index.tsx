@@ -61,38 +61,45 @@ export default function Today() {
           action="Add a course"
           onAction={() => router.push('/edit/course')}
         />
-      ) : next ? (
-        <Card
-          onPress={() => router.push(next.href as never)}
-          style={{ flexDirection: 'row', alignItems: 'center', gap: space[5], padding: space[5] }}
-        >
-          <CountdownRing
-            progress={ringProgress(next.at, now)}
-            size={112}
-            colour={next.course ? courseColours[next.course.colour % 8] : undefined}
+      ) : next.length ? (
+        next.map((n, i) => (
+          <Card
+            key={n.href}
+            onPress={() => router.push(n.href as never)}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: space[5],
+              padding: space[5],
+              marginTop: i ? space[3] : 0,
+            }}
           >
-            <T role="caption" tone="tertiary">
-              {next.kind.toUpperCase()}
-            </T>
-            <T role="headline" style={{ textAlign: 'center' }}>
-              {relative(next.at, now)}
-            </T>
-          </CountdownRing>
-          <View style={{ flex: 1, gap: space[1] }}>
-            <T role="caption" tone="tertiary">
-              NEXT UP
-            </T>
-            <T role="title2" numberOfLines={2}>
-              {next.title}
-            </T>
-            {next.course ? (
-              <CourseTag code={next.course.code} name={next.course.name} colour={next.course.colour} />
-            ) : null}
-            <T role="footnote" tone="secondary">
-              {next.sub}
-            </T>
-          </View>
-        </Card>
+            <CountdownRing
+              progress={ringProgress(n, now)}
+              size={112}
+              colour={n.course ? courseColours[n.course.colour % 8] : undefined}
+            >
+              <T role="caption" tone="tertiary">
+                {n.kind.toUpperCase()}
+              </T>
+              <T role="headline" style={{ textAlign: 'center' }}>
+                {relative(n.at, now)}
+              </T>
+            </CountdownRing>
+            <View style={{ flex: 1, gap: space[1] }}>
+              <T role="caption" tone="tertiary">
+                {i ? 'SAME DAY' : 'NEXT UP'}
+              </T>
+              <T role="title2" numberOfLines={2}>
+                {n.title}
+              </T>
+              {n.course ? <CourseTag code={n.course.code} name={n.course.name} colour={n.course.colour} /> : null}
+              <T role="footnote" tone="secondary">
+                {n.sub}
+              </T>
+            </View>
+          </Card>
+        ))
       ) : (
         <EmptyState
           text="Nothing scheduled ahead. Add a lecture, assignment or exam."

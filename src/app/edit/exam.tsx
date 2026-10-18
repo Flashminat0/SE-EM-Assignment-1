@@ -38,7 +38,15 @@ export default function EditExam() {
   );
 
   const save = async () => {
-    put('exams', { id: rowId, courseId, title: title.trim(), startsAt, venue: venue.trim(), notes: notes.trim() });
+    put('exams', {
+      id: rowId,
+      courseId,
+      title: title.trim(),
+      startsAt,
+      venue: venue.trim(),
+      notes: notes.trim(),
+      createdAt: existing?.createdAt || Date.now(),
+    });
     const course = get('courses', courseId);
     await setReminders('exam', rowId, startsAt, reminders, `${course?.code ?? ''} ${title.trim()}`.trim());
   };

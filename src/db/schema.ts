@@ -16,8 +16,16 @@ export type Assignment = Base & {
   notes: string;
   done: number;
   imageUri: string | null;
+  createdAt: number;
 };
-export type Exam = Base & { courseId: string; title: string; startsAt: number; venue: string; notes: string };
+export type Exam = Base & {
+  courseId: string;
+  title: string;
+  startsAt: number;
+  venue: string;
+  notes: string;
+  createdAt: number;
+};
 export type Alarm = Base & {
   targetType: 'assignment' | 'exam' | 'lecture';
   targetId: string;
@@ -66,11 +74,12 @@ CREATE TABLE IF NOT EXISTS lectures (
 CREATE TABLE IF NOT EXISTS assignments (
   id TEXT PRIMARY KEY, courseId TEXT NOT NULL, title TEXT NOT NULL, dueAt INTEGER NOT NULL,
   notes TEXT NOT NULL DEFAULT '', done INTEGER NOT NULL DEFAULT 0, imageUri TEXT,
-  updatedAt INTEGER NOT NULL, deletedAt INTEGER
+  createdAt INTEGER NOT NULL DEFAULT 0, updatedAt INTEGER NOT NULL, deletedAt INTEGER
 );
 CREATE TABLE IF NOT EXISTS exams (
   id TEXT PRIMARY KEY, courseId TEXT NOT NULL, title TEXT NOT NULL, startsAt INTEGER NOT NULL,
-  venue TEXT NOT NULL DEFAULT '', notes TEXT NOT NULL DEFAULT '', updatedAt INTEGER NOT NULL, deletedAt INTEGER
+  venue TEXT NOT NULL DEFAULT '', notes TEXT NOT NULL DEFAULT '', createdAt INTEGER NOT NULL DEFAULT 0,
+  updatedAt INTEGER NOT NULL, deletedAt INTEGER
 );
 CREATE TABLE IF NOT EXISTS alarms (
   id TEXT PRIMARY KEY, targetType TEXT NOT NULL, targetId TEXT NOT NULL, fireAt INTEGER NOT NULL,

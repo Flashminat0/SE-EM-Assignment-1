@@ -4,6 +4,9 @@ import { DDL, selectLive, type Base, type Course, type TableName, type Tables } 
 
 export const db = openDatabaseSync('edu-alarm.db');
 db.execSync(DDL);
+for (const t of ['assignments', 'exams'])
+  if (!db.getAllSync<{ name: string }>(`PRAGMA table_info(${t})`).some((c) => c.name === 'createdAt'))
+    db.execSync(`ALTER TABLE ${t} ADD COLUMN createdAt INTEGER NOT NULL DEFAULT 0`);
 
 let version = 0;
 const listeners = new Set<() => void>();
