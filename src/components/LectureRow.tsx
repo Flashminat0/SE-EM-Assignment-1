@@ -5,9 +5,16 @@ import { courseColours, space } from '@/theme';
 import { Card } from './Card';
 import { T } from './Text';
 
-export function LectureRow({ l, course, onPress }: { l: Lecture; course?: Course; onPress: () => void }) {
+type Props = { l: Lecture; course?: Course; nowMin?: number; onPress: () => void };
+
+export function LectureRow({ l, course, nowMin, onPress }: Props) {
+  const over = nowMin !== undefined && nowMin >= l.endMin;
+  const live = nowMin !== undefined && nowMin >= l.startMin && !over;
   return (
-    <Card onPress={onPress} style={{ flexDirection: 'row', alignItems: 'center', gap: space[3] }}>
+    <Card
+      onPress={onPress}
+      style={{ flexDirection: 'row', alignItems: 'center', gap: space[3], opacity: over ? 0.45 : 1 }}
+    >
       <View
         style={{
           width: 4,
@@ -23,6 +30,15 @@ export function LectureRow({ l, course, onPress }: { l: Lecture; course?: Course
           {l.room ? ` · ${l.room}` : ''}
         </T>
       </View>
+      {live ? (
+        <T role="caption" tone="accent">
+          Now
+        </T>
+      ) : over ? (
+        <T role="caption" tone="tertiary">
+          Done
+        </T>
+      ) : null}
     </Card>
   );
 }

@@ -130,6 +130,7 @@ export default function Today() {
                   key={l.id}
                   l={l}
                   course={courses[l.courseId]}
+                  nowMin={new Date(now).getHours() * 60 + new Date(now).getMinutes()}
                   onPress={() => router.push(`/edit/lecture?id=${l.id}` as never)}
                 />
               ))
