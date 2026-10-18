@@ -74,18 +74,29 @@ export default function Today() {
               marginTop: i ? space[3] : 0,
             }}
           >
-            <CountdownRing
-              progress={ringProgress(n, now)}
-              size={112}
-              colour={n.course ? courseColours[n.course.colour % 8] : undefined}
-            >
-              <T role="caption" tone="tertiary">
-                {n.kind.toUpperCase()}
-              </T>
-              <T role="headline" style={{ textAlign: 'center' }}>
-                {relative(n.at, now)}
-              </T>
-            </CountdownRing>
+            {n.kind === 'lecture' ? (
+              <View style={{ width: 112, alignItems: 'center', gap: space[1] }}>
+                <T role="caption" tone="tertiary">
+                  LECTURE
+                </T>
+                <T role="title2" style={{ textAlign: 'center' }}>
+                  {relative(n.at, now)}
+                </T>
+              </View>
+            ) : (
+              <CountdownRing
+                progress={ringProgress(n, now)}
+                size={112}
+                colour={n.course ? courseColours[n.course.colour % 8] : undefined}
+              >
+                <T role="caption" tone="tertiary">
+                  {n.kind.toUpperCase()}
+                </T>
+                <T role="headline" style={{ textAlign: 'center' }}>
+                  {relative(n.at, now)}
+                </T>
+              </CountdownRing>
+            )}
             <View style={{ flex: 1, gap: space[1] }}>
               <T role="caption" tone="tertiary">
                 {i ? 'SAME DAY' : 'NEXT UP'}

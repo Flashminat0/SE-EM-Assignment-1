@@ -21,7 +21,7 @@ export function nextUp(now: number, { lectures, assignments, exams, courses }: D
   const all: Next[] = [
     ...lectures.map((l) => ({
       kind: 'lecture' as const,
-      from: nextOccurrence(l.weekday, l.startMin, now) - WEEK,
+      from: 0,
       at: nextOccurrence(l.weekday, l.startMin, now),
       title: courses[l.courseId]?.name ?? 'Lecture',
       course: courses[l.courseId],
