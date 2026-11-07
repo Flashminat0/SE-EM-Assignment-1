@@ -147,7 +147,7 @@ export default function Tasks() {
             <T tone="tertiary" style={{ textAlign: 'center', paddingVertical: space[6] }}>
               All caught up.
             </T>
-          ) : null
+          ) : undefined
         }
         ListEmptyComponent={
           tab === 'assignments' ? (

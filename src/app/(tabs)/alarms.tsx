@@ -93,7 +93,7 @@ export default function Alarms() {
           />
         }
         ListFooterComponent={
-          rows.length ? <Button label="Ring a test alarm in 10 s" kind="ghost" onPress={test} /> : null
+          rows.length ? <Button label="Ring a test alarm in 10 s" kind="ghost" onPress={test} /> : undefined
         }
       />
     </Screen>
