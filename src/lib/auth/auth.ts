@@ -9,12 +9,12 @@ import {
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { meta, resetAll } from '@/db';
-import { LIMITS } from './chat-parse';
-import { friendlyError } from './errors';
+import { LIMITS } from '@/lib/chat/parse';
+import { friendlyError } from '@/lib/util/errors';
 import * as Notifications from 'expo-notifications';
-import { auth, firestore } from './firebase';
-import { deleteAllPhotos } from './photo';
-import { abortSync } from './sync';
+import { auth, firestore } from '@/lib/auth/firebase';
+import { deleteAllPhotos } from '@/lib/util/photo';
+import { abortSync } from '@/lib/sync/sync';
 
 export type Profile = { uid: string; displayName: string; createdAt: number };
 

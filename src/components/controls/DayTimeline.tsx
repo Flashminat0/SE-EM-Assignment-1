@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
-import { fmtMin } from '@/lib/format';
-import type { TimelineItem } from '@/lib/timeline';
+import { fmtMin } from '@/lib/planner/format';
+import type { TimelineItem } from '@/lib/planner/timeline';
 import { courseColours, courseFill, radius, space, typography, useColors, type TypeRole } from '@/theme';
 import { T } from '@/components/ui/Text';
 

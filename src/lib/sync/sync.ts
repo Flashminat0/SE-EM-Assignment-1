@@ -11,12 +11,33 @@ import {
 import { AppState } from 'react-native';
 import { applyRemote, get, meta, onLocalWrite, outbox } from '@/db';
 import { localOnly, tableNames, type Alarm, type TableName, type Tables } from '@/db/schema';
-import { formatCursor, newest, parseCursor, ZERO } from './cursor';
-import { friendlyError } from './errors';
-import { auth, firestore } from './firebase';
-import { mergeRemote, stripLocal } from './merge';
-import { isOnline, onOnline } from './net';
-import { schedule } from './notifications';
+import { friendlyError } from '@/lib/util/errors';
+import { auth, firestore } from '@/lib/auth/firebase';
+import { mergeRemote, stripLocal } from '@/lib/sync/merge';
+import { isOnline, onOnline } from '@/lib/sync/net';
+import { schedule } from '@/lib/alarms/notifications';
+
+type Cursor = { seconds: number; nanoseconds: number };
+
+const ZERO: Cursor = { seconds: 0, nanoseconds: 0 };
+
+// Kept as text: a Firestore timestamp has nanoseconds, a JS number does not
+const formatCursor = (c: Cursor) => `${c.seconds}.${String(c.nanoseconds).padStart(9, '0')}`;
+
+function parseCursor(s: string | null): Cursor | null {
+  const m = s?.match(/^(\d+)\.(\d{9})$/);
+  return m ? { seconds: Number(m[1]), nanoseconds: Number(m[2]) } : null;
+}
+
+const isAfter = (a: Cursor, b: Cursor) =>
+  a.seconds > b.seconds || (a.seconds === b.seconds && a.nanoseconds > b.nanoseconds);
+
+function newest(start: Cursor | null, stamps: (Cursor | undefined | null)[]): Cursor | null {
+  let max = start;
+
+  for (const s of stamps) if (s && (!max || isAfter(s, max))) max = { seconds: s.seconds, nanoseconds: s.nanoseconds };
+  return max;
+}
 
 let running = false;
 

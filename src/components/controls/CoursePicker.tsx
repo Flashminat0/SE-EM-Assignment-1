@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { useEffect, useRef } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { all, useQuery } from '@/db';
-import { courseLabel } from '@/lib/format';
+import { courseLabel } from '@/lib/planner/format';
 import { courseColours, courseFill, hit, radius, space, useColors } from '@/theme';
 import { T } from '@/components/ui/Text';
 

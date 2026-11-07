@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Alert, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { sendMessage } from '@/lib/chat';
-import { LIMITS } from '@/lib/chat-parse';
-import { friendlyError } from '@/lib/errors';
-import { useOnline } from '@/lib/net';
+import { sendMessage } from '@/lib/chat/chat';
+import { LIMITS } from '@/lib/chat/parse';
+import { friendlyError } from '@/lib/util/errors';
+import { useOnline } from '@/lib/sync/net';
 import { gutter, hit, radius, space, typography, useColors } from '@/theme';
 import { Icon } from '@/components/ui/Icon';
 import { T } from '@/components/ui/Text';

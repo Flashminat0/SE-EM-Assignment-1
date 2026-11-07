@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
 import { Pressable, View } from 'react-native';
-import { reminderOptions, reminderPassed } from '@/lib/reminders';
+import { reminderOptions, reminderPassed } from '@/lib/alarms/reminders';
 import { hit, radius, space, useColors } from '@/theme';
 import { T } from '@/components/ui/Text';
 

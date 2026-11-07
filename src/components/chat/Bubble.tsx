@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
-import type { Message } from '@/lib/chat';
-import { fmtTime } from '@/lib/format';
+import type { Message } from '@/lib/chat/chat';
+import { fmtTime } from '@/lib/planner/format';
 import { radius, space, useColors } from '@/theme';
 import { T } from '@/components/ui/Text';
 

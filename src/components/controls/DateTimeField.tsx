@@ -1,6 +1,6 @@
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
-import { fmtDate, fmtDateTime, fmtTime } from '@/lib/format';
+import { fmtDate, fmtDateTime, fmtTime } from '@/lib/planner/format';
 import { hit, radius, space, useColors } from '@/theme';
 import { T } from '@/components/ui/Text';
 

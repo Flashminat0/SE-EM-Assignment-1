@@ -5,8 +5,8 @@ import { ColourPicker } from '@/components/controls/ColourPicker';
 import { Field } from '@/components/ui/Field';
 import { T } from '@/components/ui/Text';
 import { all, get, put, remove } from '@/db';
-import { newId } from '@/lib/id';
-import { deleteItem } from '@/lib/notifications';
+import { newId } from '@/lib/util/id';
+import { deleteItem } from '@/lib/alarms/notifications';
 import { space } from '@/theme';
 import { Form, param } from '@/components/ui/Form';
 

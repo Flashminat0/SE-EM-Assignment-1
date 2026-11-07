@@ -1,10 +1,10 @@
 import * as Notifications from 'expo-notifications';
 import { all, get, put, remove } from '@/db';
 import { activeAlarm, upcomingAlarm, type Alarm, type Assignment, type Lecture } from '@/db/schema';
-import { nextOccurrence } from './format';
-import { newId } from './id';
-import { deletePhoto } from './photo';
-import { LECTURE_REMIND_MIN, lectureReminderAt, offsetsFrom, reminderTimes, snoozedAlarm } from './reminders';
+import { nextOccurrence } from '@/lib/planner/format';
+import { newId } from '@/lib/util/id';
+import { deletePhoto } from '@/lib/util/photo';
+import { LECTURE_REMIND_MIN, lectureReminderAt, offsetsFrom, reminderTimes, snoozedAlarm } from '@/lib/alarms/reminders';
 
 // Alarms open their own screen, so no banner on top when the app is open
 Notifications.setNotificationHandler({

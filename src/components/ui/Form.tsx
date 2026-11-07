@@ -4,7 +4,7 @@ import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Text';
-import { friendlyError } from '@/lib/errors';
+import { friendlyError } from '@/lib/util/errors';
 import { gutter, space, useColors } from '@/theme';
 
 export function Form({

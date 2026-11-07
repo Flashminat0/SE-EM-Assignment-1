@@ -11,8 +11,8 @@ import { SwipeRow } from '@/components/controls/SwipeRow';
 import { T } from '@/components/ui/Text';
 import { all, useCourses, usePendingIds, useQuery } from '@/db';
 import type { Assignment, Exam } from '@/db/schema';
-import { deleteItem, setAssignmentDone } from '@/lib/notifications';
-import { useNow } from '@/lib/useNow';
+import { deleteItem, setAssignmentDone } from '@/lib/alarms/notifications';
+import { useNow } from '@/lib/util/useNow';
 import { hit, space, useColors } from '@/theme';
 
 // One flat list: rows plus the Show/Hide toggle between them

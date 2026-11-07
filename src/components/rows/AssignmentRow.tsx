@@ -1,8 +1,8 @@
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 import type { Assignment, Course } from '@/db/schema';
-import { fmtDate, fmtTime, relative } from '@/lib/format';
-import { setAssignmentDone } from '@/lib/notifications';
+import { fmtDate, fmtTime, relative } from '@/lib/planner/format';
+import { setAssignmentDone } from '@/lib/alarms/notifications';
 import { space, useColors } from '@/theme';
 import { Card } from '@/components/ui/Card';
 import { CourseTag } from '@/components/controls/CourseTag';

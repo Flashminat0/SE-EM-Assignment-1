@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useOnline } from '@/lib/net';
+import { useOnline } from '@/lib/sync/net';
 import { radius, space, useColors } from '@/theme';
 import { Icon } from '@/components/ui/Icon';
 import { T } from '@/components/ui/Text';

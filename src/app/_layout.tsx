@@ -5,9 +5,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { claimLocalData, ensureProfile, useUser } from '@/lib/auth';
-import { ensurePermission, scheduleAll } from '@/lib/notifications';
-import { startSyncLoop } from '@/lib/sync';
+import { claimLocalData, ensureProfile, useUser } from '@/lib/auth/auth';
+import { ensurePermission, scheduleAll } from '@/lib/alarms/notifications';
+import { startSyncLoop } from '@/lib/sync/sync';
 import { colors } from '@/theme';
 
 // Keep the splash up until we know whether someone is signed in; no sign-in flash

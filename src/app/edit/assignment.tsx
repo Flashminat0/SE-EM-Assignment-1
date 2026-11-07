@@ -9,11 +9,11 @@ import { Field } from '@/components/ui/Field';
 import { ReminderChips } from '@/components/controls/ReminderChips';
 import { T } from '@/components/ui/Text';
 import { all, get, put } from '@/db';
-import { newId } from '@/lib/id';
-import { deleteItem, reminderOffsets, setAssignmentDone, setReminders } from '@/lib/notifications';
-import { deletePhoto, keepPhoto, localPhotoUri, takePendingPhoto } from '@/lib/photo';
-import { defaultOffsets } from '@/lib/reminders';
-import { useNow } from '@/lib/useNow';
+import { newId } from '@/lib/util/id';
+import { deleteItem, reminderOffsets, setAssignmentDone, setReminders } from '@/lib/alarms/notifications';
+import { deletePhoto, keepPhoto, localPhotoUri, takePendingPhoto } from '@/lib/util/photo';
+import { defaultOffsets } from '@/lib/alarms/reminders';
+import { useNow } from '@/lib/util/useNow';
 import { radius, space } from '@/theme';
 import { Form, param } from '@/components/ui/Form';
 

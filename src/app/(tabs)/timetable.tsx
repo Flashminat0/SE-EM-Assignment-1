@@ -10,9 +10,9 @@ import { Screen } from '@/components/ui/Screen';
 import { T } from '@/components/ui/Text';
 import { WeekStrip } from '@/components/controls/WeekStrip';
 import { all, useCourses, useQuery } from '@/db';
-import { dateOfWeekday, weekdaysLong } from '@/lib/format';
-import { daySummary, timelineItems, type TimelineItem } from '@/lib/timeline';
-import { useNow } from '@/lib/useNow';
+import { dateOfWeekday, weekdaysLong } from '@/lib/planner/format';
+import { daySummary, timelineItems, type TimelineItem } from '@/lib/planner/timeline';
+import { useNow } from '@/lib/util/useNow';
 import { space, useColors } from '@/theme';
 
 const WEEK = 7 * 86_400_000;

@@ -7,10 +7,10 @@ import { Composer } from '@/components/chat/Composer';
 import { IconButton } from '@/components/ui/IconButton';
 import { OfflineBanner } from '@/components/ui/OfflineBanner';
 import { T } from '@/components/ui/Text';
-import { blockState, channelTitle, setBlocked, useChannel, useMessages } from '@/lib/chat';
-import { friendlyError } from '@/lib/errors';
-import { auth } from '@/lib/firebase';
-import { useOnline } from '@/lib/net';
+import { blockState, channelTitle, setBlocked, useChannel, useMessages } from '@/lib/chat/chat';
+import { friendlyError } from '@/lib/util/errors';
+import { auth } from '@/lib/auth/firebase';
+import { useOnline } from '@/lib/sync/net';
 import { gutter, hit, space, useColors } from '@/theme';
 
 export default function Conversation() {

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { courseLabel } from '@/lib/format';
+import { courseLabel } from '@/lib/planner/format';
 import { courseColours, courseFill, radius, space } from '@/theme';
 import { T } from '@/components/ui/Text';
 

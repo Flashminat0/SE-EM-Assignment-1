@@ -7,9 +7,9 @@ import { Field } from '@/components/ui/Field';
 import { Icon } from '@/components/ui/Icon';
 import { Screen } from '@/components/ui/Screen';
 import { T } from '@/components/ui/Text';
-import { listPeople, openChannel, type Member } from '@/lib/chat';
-import { LIMITS } from '@/lib/chat-parse';
-import { friendlyError } from '@/lib/errors';
+import { listPeople, openChannel, type Member } from '@/lib/chat/chat';
+import { LIMITS } from '@/lib/chat/parse';
+import { friendlyError } from '@/lib/util/errors';
 import { space, useColors } from '@/theme';
 
 export default function NewChat() {

@@ -1,5 +1,5 @@
 import type { Assignment, Course, Exam, Lecture } from '@/db/schema';
-import { fmtDate, fmtMin, fmtTime, nextOccurrence } from './format';
+import { fmtDate, fmtMin, fmtTime, nextOccurrence } from '@/lib/planner/format';
 
 export type Next = {
   kind: 'lecture' | 'assignment' | 'exam';

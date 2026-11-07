@@ -1,6 +1,6 @@
 import * as Haptics from 'expo-haptics';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { dateOfWeekday, weekdays } from '@/lib/format';
+import { dateOfWeekday, weekdays } from '@/lib/planner/format';
 import { hit, radius, space, useColors } from '@/theme';
 import { T } from '@/components/ui/Text';
 

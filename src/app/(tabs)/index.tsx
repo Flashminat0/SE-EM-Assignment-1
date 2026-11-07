@@ -11,9 +11,9 @@ import { LectureRow } from '@/components/rows/LectureRow';
 import { Screen } from '@/components/ui/Screen';
 import { T } from '@/components/ui/Text';
 import { all, useCourses, useQuery } from '@/db';
-import { fmtDate, relative } from '@/lib/format';
-import { nextUp, ringProgress } from '@/lib/next';
-import { useNow } from '@/lib/useNow';
+import { fmtDate, relative } from '@/lib/planner/format';
+import { nextUp, ringProgress } from '@/lib/planner/next';
+import { useNow } from '@/lib/util/useNow';
 import { courseColours, space, useColors } from '@/theme';
 
 const DAY = 86_400_000;

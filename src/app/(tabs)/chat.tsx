@@ -5,10 +5,10 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { IconButton } from '@/components/ui/IconButton';
 import { Screen } from '@/components/ui/Screen';
 import { T } from '@/components/ui/Text';
-import { channelTitle, useChannels } from '@/lib/chat';
-import { auth } from '@/lib/firebase';
-import { ago } from '@/lib/format';
-import { useOnline } from '@/lib/net';
+import { channelTitle, useChannels } from '@/lib/chat/chat';
+import { auth } from '@/lib/auth/firebase';
+import { ago } from '@/lib/planner/format';
+import { useOnline } from '@/lib/sync/net';
 import { radius, space, useColors } from '@/theme';
 
 export default function ChatList() {

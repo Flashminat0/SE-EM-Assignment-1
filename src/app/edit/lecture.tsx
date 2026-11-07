@@ -7,9 +7,9 @@ import { Field } from '@/components/ui/Field';
 import { T } from '@/components/ui/Text';
 import { WeekStrip } from '@/components/controls/WeekStrip';
 import { all, get, put } from '@/db';
-import { newId } from '@/lib/id';
-import { deleteItem, setLectureReminder } from '@/lib/notifications';
-import { LAST_MINUTE, LECTURE_REMIND_MIN, lectureEndError } from '@/lib/reminders';
+import { newId } from '@/lib/util/id';
+import { deleteItem, setLectureReminder } from '@/lib/alarms/notifications';
+import { LAST_MINUTE, LECTURE_REMIND_MIN, lectureEndError } from '@/lib/alarms/reminders';
 import { space, useColors } from '@/theme';
 import { Form, param } from '@/components/ui/Form';
 

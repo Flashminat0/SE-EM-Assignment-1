@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import type { Course, Lecture } from '@/db/schema';
-import { fmtMin } from '@/lib/format';
+import { fmtMin } from '@/lib/planner/format';
 import { courseColours, space } from '@/theme';
 import { Card } from '@/components/ui/Card';
 import { T } from '@/components/ui/Text';

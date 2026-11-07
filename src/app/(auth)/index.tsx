@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Field } from '@/components/ui/Field';
 import { Screen } from '@/components/ui/Screen';
 import { T } from '@/components/ui/Text';
-import { authError, signIn } from '@/lib/auth';
+import { authError, signIn } from '@/lib/auth/auth';
 import { space } from '@/theme';
 
 export default function SignIn() {

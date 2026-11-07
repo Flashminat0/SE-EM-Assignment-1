@@ -1,5 +1,5 @@
 import type { Assignment, Course, Exam, Lecture } from '@/db/schema';
-import { dateOfWeekday, fmtMin, fmtTime } from './format';
+import { dateOfWeekday, fmtMin, fmtTime } from '@/lib/planner/format';
 
 export type TimelineItem = {
   id: string;

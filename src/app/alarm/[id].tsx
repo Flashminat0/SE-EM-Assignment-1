@@ -15,8 +15,8 @@ import { Button } from '@/components/ui/Button';
 import { CountdownRing } from '@/components/controls/CountdownRing';
 import { T } from '@/components/ui/Text';
 import { get, useQuery } from '@/db';
-import { fmtTime, weekdaysLong } from '@/lib/format';
-import { deleteAlarm, isActive, setAssignmentDone, snooze } from '@/lib/notifications';
+import { fmtTime, weekdaysLong } from '@/lib/planner/format';
+import { deleteAlarm, isActive, setAssignmentDone, snooze } from '@/lib/alarms/notifications';
 import { gutter, space, useColors } from '@/theme';
 
 export default function AlarmScreen() {

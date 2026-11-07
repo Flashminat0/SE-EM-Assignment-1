@@ -6,11 +6,11 @@ import { Card } from '@/components/ui/Card';
 import { Screen } from '@/components/ui/Screen';
 import { T } from '@/components/ui/Text';
 import { outbox, useQuery } from '@/db';
-import { cachedProfile, ensureProfile, signOut, useUser, type Profile } from '@/lib/auth';
-import { usingEmulators } from '@/lib/firebase';
-import { fmtDateTime } from '@/lib/format';
-import { useOnline } from '@/lib/net';
-import { onSyncChange, syncNow, syncStatus } from '@/lib/sync';
+import { cachedProfile, ensureProfile, signOut, useUser, type Profile } from '@/lib/auth/auth';
+import { usingEmulators } from '@/lib/auth/firebase';
+import { fmtDateTime } from '@/lib/planner/format';
+import { useOnline } from '@/lib/sync/net';
+import { onSyncChange, syncNow, syncStatus } from '@/lib/sync/sync';
 import { space } from '@/theme';
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;

@@ -22,7 +22,7 @@ import {
 } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { chatCache } from '@/db';
-import { cachedProfile, ensureProfile } from './auth';
+import { cachedProfile, ensureProfile } from '@/lib/auth/auth';
 import {
   LIMITS,
   mergeById,
@@ -35,9 +35,9 @@ import {
   type Channel,
   type Member,
   type Message,
-} from './chat-parse';
-import { friendlyError, userError } from './errors';
-import { auth, firestore } from './firebase';
+} from '@/lib/chat/parse';
+import { friendlyError, userError } from '@/lib/util/errors';
+import { auth, firestore } from '@/lib/auth/firebase';
 
 export type { Channel, Member, Message };
 

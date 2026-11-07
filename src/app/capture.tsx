@@ -6,8 +6,8 @@ import { Alert, AppState, Linking, Pressable, StyleSheet, View } from 'react-nat
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
 import { T } from '@/components/ui/Text';
-import { friendlyError } from '@/lib/errors';
-import { setPendingPhoto, shrink } from '@/lib/photo';
+import { friendlyError } from '@/lib/util/errors';
+import { setPendingPhoto, shrink } from '@/lib/util/photo';
 import { cameraChrome, gutter, space, useColors } from '@/theme';
 
 const MAX_WIDTH = 1280;

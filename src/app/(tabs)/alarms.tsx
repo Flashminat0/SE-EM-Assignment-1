@@ -10,9 +10,9 @@ import { SwipeRow } from '@/components/controls/SwipeRow';
 import { T } from '@/components/ui/Text';
 import { all, get, usePendingIds, useQuery } from '@/db';
 import { upcomingAlarm, type Alarm } from '@/db/schema';
-import { fmtDateTime, fmtTime, relative, weekdaysLong } from '@/lib/format';
-import { createAlarm, dismissAlarm } from '@/lib/notifications';
-import { useNow } from '@/lib/useNow';
+import { fmtDateTime, fmtTime, relative, weekdaysLong } from '@/lib/planner/format';
+import { createAlarm, dismissAlarm } from '@/lib/alarms/notifications';
+import { useNow } from '@/lib/util/useNow';
 import { space, useColors } from '@/theme';
 
 // An alarm whose item was deleted opens nothing

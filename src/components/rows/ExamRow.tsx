@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 import type { Course, Exam } from '@/db/schema';
-import { fmtDate, fmtTime, relative } from '@/lib/format';
+import { fmtDate, fmtTime, relative } from '@/lib/planner/format';
 import { space } from '@/theme';
 import { Card } from '@/components/ui/Card';
 import { CourseTag } from '@/components/controls/CourseTag';
