@@ -41,7 +41,7 @@ import { auth, firestore } from './firebase';
 
 export type { Channel, Member, Message };
 
-export type Live<T> = { rows: T; error: string | null };
+type Live<T> = { rows: T; error: string | null };
 
 type Doc = QueryDocumentSnapshot<DocumentData>;
 

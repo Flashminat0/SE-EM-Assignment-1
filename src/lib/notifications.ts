@@ -75,7 +75,7 @@ export async function dismissAlarm(id: string) {
   if (l && !l.deletedAt && l.remind) put('lectures', { ...l, remind: 0 });
 }
 
-export async function deleteAlarmsFor(targetType: Alarm['targetType'], targetId: string) {
+async function deleteAlarmsFor(targetType: Alarm['targetType'], targetId: string) {
   for (const a of all('alarms', 'targetType = ? AND targetId = ?', [targetType, targetId])) await deleteAlarm(a.id);
 }
 

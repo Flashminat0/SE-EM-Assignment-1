@@ -10,11 +10,10 @@ type Props = {
   right?: ReactNode;
   children: ReactNode;
   scroll?: boolean;
-  padded?: boolean;
   tab?: boolean;
 };
 
-export function Screen({ title, right, children, scroll = true, padded = true, tab = true }: Props) {
+export function Screen({ title, right, children, scroll = true, tab = true }: Props) {
   const c = useColors();
   const inset = useSafeAreaInsets();
 
@@ -42,13 +41,13 @@ export function Screen({ title, right, children, scroll = true, padded = true, t
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           automaticallyAdjustKeyboardInsets
-          contentContainerStyle={[padded && s.pad, { paddingBottom: space[12] + (tab ? 0 : inset.bottom) }]}
+          contentContainerStyle={[s.pad, { paddingBottom: space[12] + (tab ? 0 : inset.bottom) }]}
           keyboardShouldPersistTaps="handled"
         >
           {body}
         </ScrollView>
       ) : (
-        <View style={[{ flex: 1 }, padded && s.pad]}>{body}</View>
+        <View style={[{ flex: 1 }, s.pad]}>{body}</View>
       )}
     </View>
   );

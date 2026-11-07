@@ -8,7 +8,6 @@ export function Field({
   error,
   hint,
   style,
-  testID,
   ...rest
 }: TextInputProps & { label: string; error?: string; hint?: string }) {
   const c = useColors();
@@ -26,7 +25,6 @@ export function Field({
       </T>
       <TextInput
         {...rest}
-        testID={testID ?? `field-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
         accessibilityLabel={label}
         placeholderTextColor={c.textTertiary}
         onFocus={(e) => {

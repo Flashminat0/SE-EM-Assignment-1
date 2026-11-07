@@ -74,7 +74,7 @@ export function dateOfWeekday(anchor: number, weekday: number) {
   return d.getTime();
 }
 
-export const initials = (name: string) =>
+const initials = (name: string) =>
   name
     .split(/\s+/)
     .map((w) => w.replace(/[^\p{L}\p{N}]/gu, '')[0] ?? '')
@@ -86,13 +86,11 @@ export const courseLabel = (code: string, name: string) => {
   return i ? `${code}-${i}` : code;
 };
 
-export const startOfDay = (ms: number) => {
+const startOfDay = (ms: number) => {
   const d = new Date(ms);
   d.setHours(0, 0, 0, 0);
   return d.getTime();
 };
-
-export const isToday = (ms: number) => startOfDay(ms) === startOfDay(Date.now());
 
 // Same weekday with the time already passed means next week
 export function nextOccurrence(weekday: number, startMin: number, from = Date.now()) {

@@ -45,7 +45,7 @@ function listen(set: Set<Listener>, l: Listener) {
 }
 
 // Any change to the database: screens re-run their queries
-export function notifyChange() {
+function notifyChange() {
   version++;
   changeListeners.forEach((l) => l());
 }

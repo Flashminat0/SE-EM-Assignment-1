@@ -34,8 +34,6 @@ export const courseColours = [
   '#E0702A', // orange
 ] as const;
 
-export type CourseColourIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
-
 export const courseFill = { tag: '22', block: '26' } as const;
 
 export const cameraChrome = { backdrop: '#000000', shutter: '#FFFFFF' } as const;

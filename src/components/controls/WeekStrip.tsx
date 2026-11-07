@@ -8,21 +8,19 @@ export function WeekStrip({
   value,
   counts,
   today = new Date().getDay(),
-  startOnMonday = true,
   anchor,
   onChange,
 }: {
   value: number;
   counts?: number[];
   today?: number;
-  startOnMonday?: boolean;
   anchor?: number;
   onChange: (weekday: number) => void;
 }) {
   const c = useColors();
 
   // Shown Monday first, but values stay in getDay() numbering to match the database
-  const order = startOnMonday ? [1, 2, 3, 4, 5, 6, 0] : [0, 1, 2, 3, 4, 5, 6];
+  const order = [1, 2, 3, 4, 5, 6, 0];
 
   return (
     <View style={s.row} accessibilityRole="tablist">

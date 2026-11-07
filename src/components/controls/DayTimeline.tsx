@@ -10,15 +10,11 @@ const PAD = space[1];
 
 export function DayTimeline({
   items,
-  startHour = 7,
-  endHour = 21,
   nowMin,
   onPressItem,
   onPressSlot,
 }: {
   items: TimelineItem[];
-  startHour?: number;
-  endHour?: number;
   nowMin?: number;
   onPressItem: (item: TimelineItem) => void;
   onPressSlot: (startMin: number) => void;
@@ -27,8 +23,8 @@ export function DayTimeline({
   const { fontScale } = useWindowDimensions();
 
   // Widen the grid for anything outside 7 to 21, such as a midnight deadline
-  const first = Math.min(startHour, ...items.map((l) => Math.floor(l.startMin / 60)));
-  const last = Math.max(endHour, ...items.map((l) => Math.ceil(l.endMin / 60)));
+  const first = Math.min(7, ...items.map((l) => Math.floor(l.startMin / 60)));
+  const last = Math.max(21, ...items.map((l) => Math.ceil(l.endMin / 60)));
   const hours = Array.from({ length: last - first + 1 }, (_, i) => first + i);
   const y = (min: number) => ((min - first * 60) / 60) * HOUR;
   const lines = (...roles: TypeRole[]) => roles.reduce((sum, r) => sum + typography[r].lineHeight, 0) * fontScale;

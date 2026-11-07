@@ -4,19 +4,15 @@ import { reminderOptions, reminderPassed } from '@/lib/reminders';
 import { hit, radius, space, useColors } from '@/theme';
 import { T } from '@/components/ui/Text';
 
-export { reminderOptions };
-
 export function ReminderChips({
   value,
   at,
   now,
-  options = reminderOptions,
   onChange,
 }: {
   value: number[];
   at?: number;
   now?: number;
-  options?: readonly { minutes: number; label: string }[];
   onChange: (minutes: number[]) => void;
 }) {
   const c = useColors();
@@ -28,14 +24,14 @@ export function ReminderChips({
     onChange((value.includes(m) ? value.filter((v) => v !== m) : [...value, m]).sort((a, b) => a - b));
   };
 
-  const anyPassed = options.some((o) => passed(o.minutes));
+  const anyPassed = reminderOptions.some((o) => passed(o.minutes));
   // Saving a task whose every reminder is in the past would ring nothing
   const noneCanRing = value.length > 0 && value.every(passed);
 
   return (
     <View style={{ gap: space[2] }}>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: space[2] }}>
-        {options.map((o) => {
+        {reminderOptions.map((o) => {
           const on = value.includes(o.minutes);
           const gone = passed(o.minutes);
           return (

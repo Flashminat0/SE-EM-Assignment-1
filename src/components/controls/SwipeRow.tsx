@@ -11,13 +11,11 @@ export function SwipeRow({
   onComplete,
   onDelete,
   completeLabel = 'Done',
-  deleteLabel = 'Delete',
 }: {
   children: ReactNode;
   onComplete?: () => void;
   onDelete?: () => void;
   completeLabel?: string;
-  deleteLabel?: string;
 }) {
   const c = useColors();
 
@@ -50,7 +48,7 @@ export function SwipeRow({
       renderLeftActions={
         onComplete ? () => action(c.done, completeLabel, 'checkmark', 'check', 'flex-start') : undefined
       }
-      renderRightActions={onDelete ? () => action(c.overdue, deleteLabel, 'trash', 'delete', 'flex-end') : undefined}
+      renderRightActions={onDelete ? () => action(c.overdue, 'Delete', 'trash', 'delete', 'flex-end') : undefined}
       // 'right' means the row moved right, i.e. the left (Done) panel is showing
       onSwipeableOpen={(dir) => {
         if (dir === 'right' && onComplete) {
