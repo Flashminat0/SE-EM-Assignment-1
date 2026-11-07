@@ -1,4 +1,4 @@
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, { type NetInfoState } from '@react-native-community/netinfo';
 import { useEffect, useState } from 'react';
 import { emulatorHost, usingEmulators } from '@/lib/auth/firebase';
 
@@ -18,14 +18,19 @@ if (usingEmulators) {
 let online = true;
 
 const subs = new Set<(v: boolean) => void>();
-NetInfo.addEventListener((s) => {
+const apply = (s: NetInfoState) => {
   const next = !!s.isConnected && s.isInternetReachable !== false;
 
   if (next !== online) {
     online = next;
     subs.forEach((f) => f(next));
   }
-});
+  return next;
+};
+NetInfo.addEventListener(apply);
+
+// The Offline pill asks again instead of waiting for the next event
+export const recheck = async () => apply(await NetInfo.fetch());
 
 export const isOnline = () => online;
 
