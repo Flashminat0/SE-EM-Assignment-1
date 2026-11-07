@@ -19,7 +19,8 @@ let online = true;
 
 const subs = new Set<(v: boolean) => void>();
 const apply = (s: NetInfoState) => {
-  const next = !!s.isConnected && s.isInternetReachable !== false;
+  // isInternetReachable lags up to a minute after Wi-Fi returns, so go by the link only
+  const next = !!s.isConnected;
 
   if (next !== online) {
     online = next;
