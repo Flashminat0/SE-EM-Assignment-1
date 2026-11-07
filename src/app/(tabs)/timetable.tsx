@@ -17,7 +17,7 @@ import { space, useColors } from '@/theme';
 
 const WEEK = 7 * 86_400_000;
 
-const shortDate = (ms: number) => new Date(ms).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+const shortDate = (ms: number) => new Date(ms).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 
 export default function Timetable() {
   const c = useColors();

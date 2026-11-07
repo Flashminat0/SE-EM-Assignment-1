@@ -14,11 +14,12 @@ export const fmtTime = (ms: number) => {
   return fmtMin(d.getHours() * 60 + d.getMinutes());
 };
 
+// Day before month, the way dates are read in Sri Lanka
 export function fmtDate(ms: number) {
   const d = new Date(ms),
     now = new Date();
   const sameYear = d.getFullYear() === now.getFullYear();
-  return d.toLocaleDateString(undefined, {
+  return d.toLocaleDateString('en-GB', {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
@@ -60,7 +61,7 @@ export function ago(ms: number, now = Date.now()) {
   if (days <= 1) return 'Yesterday';
 
   if (days < 7) return `${days} days`;
-  return new Date(ms).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+  return new Date(ms).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
 const isSameDay = (a: number, b: number) => startOfDay(a) === startOfDay(b);

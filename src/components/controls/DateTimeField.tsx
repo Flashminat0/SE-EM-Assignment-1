@@ -57,6 +57,7 @@ export function DateTimeField({
         value={new Date(value)}
         mode={mode}
         display="compact"
+        locale="en-GB"
         onValueChange={(_, d) => onChange(d.getTime())}
         accentColor={c.accent}
       />
