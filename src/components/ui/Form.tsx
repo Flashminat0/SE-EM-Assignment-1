@@ -2,8 +2,8 @@ import { useRouter } from 'expo-router';
 import { useRef, useState, type ReactNode } from 'react';
 import { Alert, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Button } from '@/components/Button';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { T } from '@/components/ui/Text';
 import { friendlyError } from '@/lib/errors';
 import { gutter, space, useColors } from '@/theme';
 
@@ -31,6 +31,7 @@ export function Form({
   const inset = useSafeAreaInsets();
   const busy = useRef(false);
   const [saving, setSaving] = useState(false);
+
   const run = (action: () => unknown, title: string) => {
     if (busy.current) return;
     busy.current = true;
@@ -46,11 +47,13 @@ export function Form({
         },
       );
   };
+
   const confirmDelete = () =>
     Alert.alert(deleteLabel + '?', deleteHint, [
       { text: 'Cancel', style: 'cancel' },
       { text: deleteLabel, style: 'destructive', onPress: () => run(() => onDelete?.(), 'Not deleted') },
     ]);
+
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: c.canvas }}
@@ -84,6 +87,7 @@ export function Form({
     </ScrollView>
   );
 }
+
 const s = StyleSheet.create({
   body: { paddingHorizontal: gutter, paddingTop: space[4], gap: space[5] },
   header: { flexDirection: 'row', alignItems: 'center', marginRight: -space[5] },

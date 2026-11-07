@@ -1,11 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getApp, getApps, initializeApp } from 'firebase/app';
+
 // @ts-expect-error React Native-only export
 import { connectAuthEmulator, getReactNativePersistence, initializeAuth } from 'firebase/auth';
 import { connectFirestoreEmulator, initializeFirestore } from 'firebase/firestore';
 
 export const usingEmulators = process.env.EXPO_PUBLIC_USE_EMULATORS === '1';
+
 export const emulatorHost = process.env.EXPO_PUBLIC_EMULATOR_HOST || '127.0.0.1';
+
 const host = emulatorHost;
 
 const config = usingEmulators
@@ -19,8 +22,11 @@ const config = usingEmulators
     };
 
 const fresh = getApps().length === 0;
+
 export const app = fresh ? initializeApp(config) : getApp();
+
 export const auth = initializeAuth(app, { persistence: getReactNativePersistence(AsyncStorage) });
+
 export const firestore = initializeFirestore(app, { experimentalForceLongPolling: true });
 
 if (usingEmulators && fresh) {

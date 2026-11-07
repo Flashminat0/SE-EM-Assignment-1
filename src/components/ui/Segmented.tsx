@@ -1,7 +1,7 @@
 import * as Haptics from 'expo-haptics';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { hit, radius, space, useColors } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 export function Segmented<K extends string>({
   options,
@@ -13,6 +13,7 @@ export function Segmented<K extends string>({
   onChange: (k: K) => void;
 }) {
   const c = useColors();
+
   return (
     <View style={[s.wrap, { backgroundColor: c.sunken }]} accessibilityRole="tablist">
       {options.map((o) => {
@@ -40,6 +41,7 @@ export function Segmented<K extends string>({
     </View>
   );
 }
+
 const s = StyleSheet.create({
   wrap: { flexDirection: 'row', borderRadius: radius.md, padding: space[1] },
   seg: { flex: 1, minHeight: hit, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md - 2 },

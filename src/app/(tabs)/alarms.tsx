@@ -1,13 +1,13 @@
 import { useRouter, type Href } from 'expo-router';
 import { FlatList, View } from 'react-native';
-import { Button } from '@/components/Button';
-import { Card } from '@/components/Card';
-import { EmptyState } from '@/components/EmptyState';
-import { Icon } from '@/components/Icon';
-import { PendingMark } from '@/components/PendingMark';
-import { Screen } from '@/components/Screen';
-import { SwipeRow } from '@/components/SwipeRow';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { Icon } from '@/components/ui/Icon';
+import { PendingMark } from '@/components/ui/PendingMark';
+import { Screen } from '@/components/ui/Screen';
+import { SwipeRow } from '@/components/controls/SwipeRow';
+import { T } from '@/components/ui/Text';
 import { all, get, usePendingIds, useQuery } from '@/db';
 import { upcomingAlarm, type Alarm } from '@/db/schema';
 import { fmtDateTime, fmtTime, relative, weekdaysLong } from '@/lib/format';
@@ -18,8 +18,10 @@ import { space, useColors } from '@/theme';
 function itemHref(a: Alarm): Href | null {
   if (a.targetType === 'assignment' && get('assignments', a.targetId))
     return { pathname: '/edit/assignment', params: { id: a.targetId } };
+
   if (a.targetType === 'exam' && get('exams', a.targetId))
     return { pathname: '/edit/exam', params: { id: a.targetId } };
+
   if (a.targetType === 'lecture' && get('lectures', a.targetId))
     return { pathname: '/edit/lecture', params: { id: a.targetId } };
   return null;
@@ -34,6 +36,7 @@ export default function Alarms() {
     [now],
   );
   const pending = usePendingIds('alarms');
+
   const test = () =>
     void createAlarm({
       targetType: 'assignment',

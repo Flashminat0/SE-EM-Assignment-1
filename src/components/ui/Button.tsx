@@ -1,7 +1,7 @@
 import * as Haptics from 'expo-haptics';
 import { ActivityIndicator, Pressable, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
 import { hit, radius, space, useColors } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 type Props = {
   label: string;
@@ -14,6 +14,7 @@ type Props = {
 
 export function Button({ label, onPress, kind = 'primary', disabled, loading, style }: Props) {
   const c = useColors();
+
   const bg =
     kind === 'primary'
       ? c.accent
@@ -23,6 +24,7 @@ export function Button({ label, onPress, kind = 'primary', disabled, loading, st
           ? c.overdue
           : 'transparent';
   const fg = kind === 'primary' || kind === 'destructive' ? 'onAccent' : kind === 'ghost' ? 'accent' : 'primary';
+
   return (
     <Pressable
       accessibilityRole="button"
@@ -53,6 +55,7 @@ export function Button({ label, onPress, kind = 'primary', disabled, loading, st
     </Pressable>
   );
 }
+
 const s = StyleSheet.create({
   base: {
     minHeight: hit + 6,

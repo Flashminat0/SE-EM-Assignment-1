@@ -14,7 +14,9 @@ export type Next = {
 type Data = { lectures: Lecture[]; assignments: Assignment[]; exams: Exam[]; courses: Record<string, Course> };
 
 const DAY = 86_400_000;
+
 const WEEK = 7 * DAY;
+
 const sameDay = (a: number, b: number) => new Date(a).toDateString() === new Date(b).toDateString();
 
 export function nextUp(now: number, { lectures, assignments, exams, courses }: Data): Next[] {

@@ -4,6 +4,7 @@ import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 export async function shrink(uri: string, width: number) {
   const img = await ImageManipulator.manipulate(uri).resize({ width }).renderAsync();
   const out = await img.saveAsync({ compress: 0.6, format: SaveFormat.JPEG });
+
   try {
     new File(uri).delete();
   } catch {}
@@ -11,9 +12,11 @@ export async function shrink(uri: string, width: number) {
 }
 
 let pending: { uri: string; for: string } | null = null;
+
 export const setPendingPhoto = (uri: string, target: string) => {
   pending = { uri, for: target };
 };
+
 export function takePendingPhoto(target: string) {
   if (!pending || pending.for !== target) return null;
   const uri = pending.uri;
@@ -22,10 +25,12 @@ export function takePendingPhoto(target: string) {
 }
 
 const DIR = 'photos';
+
 const folder = () => new Directory(Paths.document, DIR);
 
 export function keepPhoto(cacheUri: string, rowId: string): string {
   const dir = folder();
+
   if (!dir.exists) dir.create({ intermediates: true, idempotent: true });
   const name = `${rowId}-${Date.now()}.jpg`;
   new File(cacheUri).copySync(new File(dir, name));
@@ -37,6 +42,7 @@ export const localPhotoUri = (stored: string) =>
 
 export function deletePhoto(stored: string | null | undefined) {
   if (!stored || stored.includes('://')) return; // only files this app owns
+
   try {
     const f = new File(Paths.document, stored);
     if (f.exists) f.delete();

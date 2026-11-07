@@ -2,11 +2,13 @@ import { StyleSheet, View } from 'react-native';
 import type { Message } from '@/lib/chat';
 import { fmtTime } from '@/lib/format';
 import { radius, space, useColors } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 export function Bubble({ m, mine, showName }: { m: Message; mine: boolean; showName: boolean }) {
   const c = useColors();
+
   const side = mine ? 'flex-end' : 'flex-start';
+
   return (
     <View style={{ alignSelf: side, maxWidth: '82%', gap: 2 }}>
       {showName && !mine ? (

@@ -1,10 +1,11 @@
 import * as Haptics from 'expo-haptics';
 import { Pressable } from 'react-native';
 import { hit, useColors } from '@/theme';
-import { Icon } from './Icon';
+import { Icon } from '@/components/ui/Icon';
 
 export function DoneCircle({ done, onChange }: { done: boolean; onChange: (done: boolean) => void }) {
   const c = useColors();
+
   return (
     <Pressable
       accessibilityRole="checkbox"

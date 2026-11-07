@@ -1,10 +1,10 @@
 import { useRouter } from 'expo-router';
 import { FlatList, View } from 'react-native';
-import { Card } from '@/components/Card';
-import { EmptyState } from '@/components/EmptyState';
-import { IconButton } from '@/components/IconButton';
-import { Screen } from '@/components/Screen';
-import { T } from '@/components/Text';
+import { Card } from '@/components/ui/Card';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { IconButton } from '@/components/ui/IconButton';
+import { Screen } from '@/components/ui/Screen';
+import { T } from '@/components/ui/Text';
 import { channelTitle, useChannels } from '@/lib/chat';
 import { auth } from '@/lib/firebase';
 import { ago } from '@/lib/format';
@@ -16,6 +16,7 @@ export default function ChatList() {
   const router = useRouter();
   const online = useOnline();
   const { rows: channels, error } = useChannels();
+
   const uid = auth.currentUser?.uid ?? '';
   const empty = !online
     ? 'Chat needs a connection to start. Conversations you opened before stay readable here offline.'

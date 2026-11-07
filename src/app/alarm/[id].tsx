@@ -11,9 +11,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Button } from '@/components/Button';
-import { CountdownRing } from '@/components/CountdownRing';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { CountdownRing } from '@/components/controls/CountdownRing';
+import { T } from '@/components/ui/Text';
 import { get, useQuery } from '@/db';
 import { fmtTime, weekdaysLong } from '@/lib/format';
 import { deleteAlarm, isActive, setAssignmentDone, snooze } from '@/lib/notifications';
@@ -23,6 +23,7 @@ export default function AlarmScreen() {
   const c = useColors();
   const router = useRouter();
   const inset = useSafeAreaInsets();
+
   const { id } = useLocalSearchParams<{ id: string }>();
   const alarm = useQuery(() => {
     const a = get('alarms', id);
@@ -30,6 +31,7 @@ export default function AlarmScreen() {
   }, [id]);
   const reduce = useReducedMotion();
   const pulse = useSharedValue(1);
+
   useEffect(() => {
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
     if (!reduce)
@@ -38,18 +40,22 @@ export default function AlarmScreen() {
   const pulseStyle = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }] }));
 
   const close = () => (router.canGoBack() ? router.back() : router.replace('/(tabs)'));
+
   const dismiss = () => {
     const one = alarm && !alarm.weekly ? alarm.id : null;
     close();
     if (one) void deleteAlarm(one);
   };
+
   const assignment = alarm?.targetType === 'assignment' ? get('assignments', alarm.targetId) : null;
+
   const done = () => {
     if (assignment) {
       close();
       void setAssignmentDone(assignment, true);
     } else dismiss();
   };
+
   const doSnooze = async (m: number) => {
     if (alarm) await snooze(alarm.id, m);
     close();
@@ -63,7 +69,9 @@ export default function AlarmScreen() {
       </View>
     );
   }
+
   const d = new Date(alarm.fireAt);
+
   return (
     <View
       style={[
@@ -115,4 +123,5 @@ export default function AlarmScreen() {
     </View>
   );
 }
+
 const s = StyleSheet.create({ root: { flex: 1, alignItems: 'center', paddingHorizontal: gutter } });

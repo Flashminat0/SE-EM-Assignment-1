@@ -23,14 +23,17 @@ export function CountdownRing({
 }) {
   const c = useColors();
   const reduce = useReducedMotion();
+
   const r = (size - stroke) / 2;
   const circ = 2 * Math.PI * r;
   const p = useSharedValue(0);
+
   useEffect(() => {
     const clamped = Math.min(1, Math.max(0, progress));
     p.value = reduce ? clamped : withSpring(clamped, { damping: 18, stiffness: 90, overshootClamping: true });
   }, [progress, reduce, p]);
   const animated = useAnimatedProps(() => ({ strokeDashoffset: circ * (1 - Math.min(1, Math.max(0, p.value))) }));
+
   return (
     <View
       style={[{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }, style]}

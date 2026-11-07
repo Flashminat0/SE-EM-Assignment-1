@@ -1,18 +1,18 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { CoursePicker } from '@/components/CoursePicker';
-import { DateTimeField } from '@/components/DateTimeField';
-import { Field } from '@/components/Field';
-import { ReminderChips } from '@/components/ReminderChips';
-import { T } from '@/components/Text';
+import { CoursePicker } from '@/components/controls/CoursePicker';
+import { DateTimeField } from '@/components/controls/DateTimeField';
+import { Field } from '@/components/ui/Field';
+import { ReminderChips } from '@/components/controls/ReminderChips';
+import { T } from '@/components/ui/Text';
 import { all, get, put } from '@/db';
 import { newId } from '@/lib/id';
 import { deleteItem, reminderOffsets, setReminders } from '@/lib/notifications';
 import { defaultOffsets } from '@/lib/reminders';
 import { useNow } from '@/lib/useNow';
 import { space } from '@/theme';
-import { Form, param } from '@/components/Form';
+import { Form, param } from '@/components/ui/Form';
 
 const nextWeek9am = () => {
   const d = new Date();
@@ -23,6 +23,7 @@ const nextWeek9am = () => {
 
 export default function EditExam() {
   const now = useNow();
+
   const id = param(useLocalSearchParams<{ id?: string }>().id);
   const existing = id ? get('exams', id) : null;
   const [rowId] = useState(() => existing?.id ?? newId());
@@ -50,6 +51,7 @@ export default function EditExam() {
     const course = get('courses', courseId);
     await setReminders('exam', rowId, startsAt, reminders, `${course?.code ?? ''} ${title.trim()}`.trim());
   };
+
   const del = async () => {
     if (existing) await deleteItem('exam', existing.id);
   };

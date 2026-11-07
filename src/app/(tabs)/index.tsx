@@ -1,15 +1,15 @@
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
-import { AssignmentRow } from '@/components/AssignmentRow';
-import { Card } from '@/components/Card';
-import { CountdownRing } from '@/components/CountdownRing';
-import { CourseTag } from '@/components/CourseTag';
-import { EmptyState } from '@/components/EmptyState';
-import { ExamRow } from '@/components/ExamRow';
-import { IconButton } from '@/components/IconButton';
-import { LectureRow } from '@/components/LectureRow';
-import { Screen } from '@/components/Screen';
-import { T } from '@/components/Text';
+import { AssignmentRow } from '@/components/rows/AssignmentRow';
+import { Card } from '@/components/ui/Card';
+import { CountdownRing } from '@/components/controls/CountdownRing';
+import { CourseTag } from '@/components/controls/CourseTag';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { ExamRow } from '@/components/rows/ExamRow';
+import { IconButton } from '@/components/ui/IconButton';
+import { LectureRow } from '@/components/rows/LectureRow';
+import { Screen } from '@/components/ui/Screen';
+import { T } from '@/components/ui/Text';
 import { all, useCourses, useQuery } from '@/db';
 import { fmtDate, relative } from '@/lib/format';
 import { nextUp, ringProgress } from '@/lib/next';
@@ -22,6 +22,7 @@ export default function Today() {
   const c = useColors();
   const router = useRouter();
   const now = useNow();
+
   const today = new Date(now).getDay();
   const courses = useCourses();
   const lectures = useQuery(() => all('lectures', 'weekday = ?', [today], 'startMin ASC'), [today]);

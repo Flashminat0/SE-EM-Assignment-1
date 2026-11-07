@@ -2,9 +2,10 @@ import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { fmtMin } from '@/lib/format';
 import type { TimelineItem } from '@/lib/timeline';
 import { courseColours, courseFill, radius, space, typography, useColors, type TypeRole } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 const HOUR = 64;
+
 const PAD = space[1];
 
 export function DayTimeline({
@@ -24,11 +25,13 @@ export function DayTimeline({
 }) {
   const c = useColors();
   const { fontScale } = useWindowDimensions();
+
   const first = Math.min(startHour, ...items.map((l) => Math.floor(l.startMin / 60)));
   const last = Math.max(endHour, ...items.map((l) => Math.ceil(l.endMin / 60)));
   const hours = Array.from({ length: last - first + 1 }, (_, i) => first + i);
   const y = (min: number) => ((min - first * 60) / 60) * HOUR;
   const lines = (...roles: TypeRole[]) => roles.reduce((sum, r) => sum + typography[r].lineHeight, 0) * fontScale;
+
   return (
     <View style={{ height: (last - first) * HOUR + HOUR / 2 }}>
       {hours.map((h) => (
@@ -120,7 +123,9 @@ export function DayTimeline({
     </View>
   );
 }
+
 const LABEL_W = 64;
+
 const s = StyleSheet.create({
   hour: { position: 'absolute', left: 0, right: 0, height: HOUR, flexDirection: 'row', alignItems: 'flex-start' },
   label: { width: LABEL_W, marginTop: -8 },

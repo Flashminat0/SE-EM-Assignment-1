@@ -3,6 +3,7 @@ import { useColors } from '@/theme';
 
 export default function TabsLayout() {
   const c = useColors();
+
   return (
     <NativeTabs tintColor={c.accent} backgroundColor={c.elevated} labelStyle={{ selected: { color: c.accent } }}>
       <NativeTabs.Trigger name="index">

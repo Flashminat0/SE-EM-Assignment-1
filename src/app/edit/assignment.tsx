@@ -2,12 +2,12 @@ import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { Image } from 'expo-image';
 import { useCallback, useState } from 'react';
 import { Pressable, View } from 'react-native';
-import { Button } from '@/components/Button';
-import { CoursePicker } from '@/components/CoursePicker';
-import { DateTimeField } from '@/components/DateTimeField';
-import { Field } from '@/components/Field';
-import { ReminderChips } from '@/components/ReminderChips';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { CoursePicker } from '@/components/controls/CoursePicker';
+import { DateTimeField } from '@/components/controls/DateTimeField';
+import { Field } from '@/components/ui/Field';
+import { ReminderChips } from '@/components/controls/ReminderChips';
+import { T } from '@/components/ui/Text';
 import { all, get, put } from '@/db';
 import { newId } from '@/lib/id';
 import { deleteItem, reminderOffsets, setAssignmentDone, setReminders } from '@/lib/notifications';
@@ -15,7 +15,7 @@ import { deletePhoto, keepPhoto, localPhotoUri, takePendingPhoto } from '@/lib/p
 import { defaultOffsets } from '@/lib/reminders';
 import { useNow } from '@/lib/useNow';
 import { radius, space } from '@/theme';
-import { Form, param } from '@/components/Form';
+import { Form, param } from '@/components/ui/Form';
 
 const tomorrow5pm = () => {
   const d = new Date();
@@ -27,6 +27,7 @@ const tomorrow5pm = () => {
 export default function EditAssignment() {
   const router = useRouter();
   const now = useNow();
+
   const id = param(useLocalSearchParams<{ id?: string }>().id);
   const existing = id ? get('assignments', id) : null;
   const [rowId] = useState(() => existing?.id ?? newId());
@@ -63,9 +64,11 @@ export default function EditAssignment() {
     const course = get('courses', courseId);
     await setReminders('assignment', rowId, dueAt, reminders, `${course?.code ?? ''} ${title.trim()}`.trim());
   };
+
   const del = async () => {
     if (existing) await deleteItem('assignment', existing.id);
   };
+
   const capture = () => router.push({ pathname: '/capture', params: { for: 'assignment' } });
 
   return (

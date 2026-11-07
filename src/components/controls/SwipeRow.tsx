@@ -3,8 +3,8 @@ import { useRef, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import ReanimatedSwipeable, { type SwipeableMethods } from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { radius, rowMinHeight, space, useColors } from '@/theme';
-import { Icon } from './Icon';
-import { T } from './Text';
+import { Icon } from '@/components/ui/Icon';
+import { T } from '@/components/ui/Text';
 
 export function SwipeRow({
   children,
@@ -20,6 +20,7 @@ export function SwipeRow({
   deleteLabel?: string;
 }) {
   const c = useColors();
+
   const ref = useRef<SwipeableMethods>(null);
   const action = (
     bg: string,
@@ -37,6 +38,7 @@ export function SwipeRow({
       </View>
     </View>
   );
+
   return (
     <ReanimatedSwipeable
       ref={ref}
@@ -67,4 +69,5 @@ export function SwipeRow({
     </ReanimatedSwipeable>
   );
 }
+
 const s = StyleSheet.create({ action: { flex: 1, justifyContent: 'center', minHeight: rowMinHeight } });

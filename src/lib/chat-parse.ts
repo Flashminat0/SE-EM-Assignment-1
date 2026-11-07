@@ -1,4 +1,5 @@
 export type Member = { uid: string; displayName: string };
+
 export type Channel = {
   id: string;
   kind: 'dm' | 'group';
@@ -9,6 +10,7 @@ export type Channel = {
   lastMessageText: string;
   blockedBy: string[];
 };
+
 export type Message = {
   id: string;
   senderId: string;
@@ -21,7 +23,9 @@ export type Message = {
 export const LIMITS = { name: 80, preview: 200, text: 2000 } as const;
 
 const obj = (v: unknown) => (v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, unknown>) : null);
+
 const str = (v: unknown, max: number) => (typeof v === 'string' ? v.slice(0, max) : '');
+
 const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : 0);
 
 export function toMember(uid: string, v: unknown): Member {
@@ -31,10 +35,12 @@ export function toMember(uid: string, v: unknown): Member {
 
 export function toChannel(id: unknown, v: unknown): Channel | null {
   const d = obj(v);
+
   if (!d || typeof id !== 'string' || !id) return null;
   const memberIds = Array.isArray(d.memberIds)
     ? d.memberIds.filter((m): m is string => typeof m === 'string' && m.length > 0)
     : [];
+
   if (memberIds.length === 0) return null;
   const raw = obj(d.members) ?? {};
   return {
@@ -53,6 +59,7 @@ export function toChannel(id: unknown, v: unknown): Channel | null {
 
 export function toMessage(id: unknown, v: unknown, createdAt: number, pending = false): Message | null {
   const m = obj(v);
+
   if (!m || typeof id !== 'string' || !id) return null;
   return {
     id,
@@ -66,6 +73,7 @@ export function toMessage(id: unknown, v: unknown, createdAt: number, pending = 
 
 export const parseChannels = (rows: unknown): Channel[] =>
   Array.isArray(rows) ? rows.map((r) => toChannel(obj(r)?.id, r)).filter((c): c is Channel => c !== null) : [];
+
 export const parseMessages = (rows: unknown): Message[] =>
   Array.isArray(rows)
     ? rows.map((r) => toMessage(obj(r)?.id, r, num(obj(r)?.createdAt))).filter((m): m is Message => m !== null)
@@ -73,6 +81,7 @@ export const parseMessages = (rows: unknown): Message[] =>
 
 export function mergeById<T extends { id: string }>(saved: T[], fresh: T[], newestFirst: (a: T, b: T) => number): T[] {
   const byId = new Map(saved.map((r) => [r.id, r]));
+
   for (const r of fresh) byId.set(r.id, r);
   return [...byId.values()].sort(newestFirst);
 }

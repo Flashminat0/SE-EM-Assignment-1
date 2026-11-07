@@ -6,10 +6,11 @@ import { LIMITS } from '@/lib/chat-parse';
 import { friendlyError } from '@/lib/errors';
 import { useOnline } from '@/lib/net';
 import { gutter, hit, radius, space, typography, useColors } from '@/theme';
-import { Icon } from './Icon';
-import { T } from './Text';
+import { Icon } from '@/components/ui/Icon';
+import { T } from '@/components/ui/Text';
 
 const SEND = 36;
+
 const COUNT_FROM = LIMITS.text - 200;
 
 export function Composer({ channelId }: { channelId: string }) {
@@ -18,6 +19,7 @@ export function Composer({ channelId }: { channelId: string }) {
   const online = useOnline();
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
+
   const ready = online && !sending && text.trim().length > 0;
 
   const send = async () => {
@@ -31,6 +33,7 @@ export function Composer({ channelId }: { channelId: string }) {
       setSending(false);
     }
   };
+
   return (
     <>
       {text.length >= COUNT_FROM ? (

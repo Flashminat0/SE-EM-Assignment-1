@@ -1,10 +1,10 @@
 import { Link } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Button } from '@/components/Button';
-import { Field } from '@/components/Field';
-import { Screen } from '@/components/Screen';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { Field } from '@/components/ui/Field';
+import { Screen } from '@/components/ui/Screen';
+import { T } from '@/components/ui/Text';
 import { authError, signIn } from '@/lib/auth';
 import { space } from '@/theme';
 
@@ -13,6 +13,7 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<{ field: 'email' | 'password'; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
+
   const go = async () => {
     if (!email.trim()) {
       setError({ field: 'email', text: 'Enter your email address.' });
@@ -32,6 +33,7 @@ export default function SignIn() {
       setBusy(false);
     }
   };
+
   return (
     <Screen>
       <View style={{ gap: space[5], paddingTop: space[12] }}>

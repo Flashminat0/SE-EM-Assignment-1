@@ -9,6 +9,7 @@ export const reminderOptions = [
   { minutes: 2 * 24 * 60, label: '2 days before' },
   { minutes: 7 * 24 * 60, label: '1 week before' },
 ] as const;
+
 const presets: readonly number[] = reminderOptions.map((o) => o.minutes);
 
 export function reminderTimes(at: number, offsetsMin: number[], now = Date.now()): number[] {
@@ -22,6 +23,7 @@ export const reminderPassed = (at: number, offsetMin: number, now: number) => at
 
 export function defaultOffsets(at: number, now: number, wanted: readonly number[] = [24 * 60]): number[] {
   const ahead = wanted.filter((m) => !reminderPassed(at, m, now));
+
   if (ahead.length) return [...ahead];
   const fallback = [24 * 60, 60, 0].find((m) => !reminderPassed(at, m, now));
   return fallback === undefined ? [] : [fallback];
@@ -45,5 +47,6 @@ export function lectureReminderAt(weekday: number, startMin: number, before = LE
 }
 
 export const LAST_MINUTE = 24 * 60 - 1;
+
 export const lectureEndError = (startMin: number, endMin: number) =>
   endMin <= startMin ? 'Ends must be after it starts.' : '';

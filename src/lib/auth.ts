@@ -20,6 +20,7 @@ export type Profile = { uid: string; displayName: string; createdAt: number };
 
 export function useUser() {
   const [user, setUser] = useState<User | null | undefined>(undefined);
+
   useEffect(() => onAuthStateChanged(auth, setUser), []);
   return user;
 }
@@ -27,20 +28,24 @@ export function useUser() {
 export const signIn = (email: string, password: string) => signInWithEmailAndPassword(auth, email.trim(), password);
 
 const profileRef = (uid: string) => doc(firestore, 'users', uid);
+
 const cache = (p: Profile) => {
   meta.set('profile', JSON.stringify(p));
   return p;
 };
+
 export const cachedProfile = (): Profile | null => {
   const s = meta.get('profile');
   return s ? (JSON.parse(s) as Profile) : null;
 };
+
 const cleanName = (name: string) => name.trim().slice(0, LIMITS.name).trim();
 
 let signingUp: Promise<unknown> | null = null;
 
 export async function signUp(displayName: string, email: string, password: string) {
   const name = cleanName(displayName);
+
   const run = (async () => {
     const cred = await createUserWithEmailAndPassword(auth, email.trim(), password);
     await updateProfile(cred.user, { displayName: name });
@@ -48,6 +53,7 @@ export async function signUp(displayName: string, email: string, password: strin
     return cred.user;
   })();
   signingUp = run.catch(() => {});
+
   try {
     return await run;
   } finally {
@@ -57,6 +63,7 @@ export async function signUp(displayName: string, email: string, password: strin
 
 export async function ensureProfile(user: User): Promise<Profile | null> {
   if (signingUp) await signingUp;
+
   try {
     const snap = await getDoc(profileRef(user.uid));
     const data = snap.exists() ? (snap.data() as Partial<Profile> & Record<string, unknown>) : null;
@@ -91,6 +98,7 @@ export async function signOut() {
 
 export async function claimLocalData(uid: string) {
   const owner = meta.get('owner');
+
   if (owner && owner !== uid) await wipeLocal();
   meta.set('owner', uid);
 }

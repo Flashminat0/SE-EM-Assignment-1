@@ -1,11 +1,12 @@
 import { View } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { space, useColors } from '@/theme';
-import { Button } from './Button';
-import { T } from './Text';
+import { Button } from '@/components/ui/Button';
+import { T } from '@/components/ui/Text';
 
 export function EmptyState({ text, action, onAction }: { text: string; action?: string; onAction?: () => void }) {
   const c = useColors();
+
   return (
     <View style={{ alignItems: 'center', gap: space[4], paddingVertical: space[10] }}>
       <Svg width={96} height={96} viewBox="0 0 96 96" accessibilityElementsHidden>

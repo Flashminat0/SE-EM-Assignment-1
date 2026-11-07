@@ -1,10 +1,11 @@
 import * as Haptics from 'expo-haptics';
 import { Pressable, View } from 'react-native';
 import { courseColours, hit, space, useColors } from '@/theme';
-import { Icon } from './Icon';
+import { Icon } from '@/components/ui/Icon';
 
 export function ColourPicker({ value, onChange }: { value: number; onChange: (index: number) => void }) {
   const c = useColors();
+
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: space[3] }} accessibilityRole="radiogroup">
       {courseColours.map((tint, i) => (

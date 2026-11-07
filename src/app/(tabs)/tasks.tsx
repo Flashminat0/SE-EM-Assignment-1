@@ -1,14 +1,14 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Alert, FlatList, Pressable } from 'react-native';
-import { AssignmentRow } from '@/components/AssignmentRow';
-import { EmptyState } from '@/components/EmptyState';
-import { ExamRow } from '@/components/ExamRow';
-import { IconButton } from '@/components/IconButton';
-import { Screen } from '@/components/Screen';
-import { Segmented } from '@/components/Segmented';
-import { SwipeRow } from '@/components/SwipeRow';
-import { T } from '@/components/Text';
+import { AssignmentRow } from '@/components/rows/AssignmentRow';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { ExamRow } from '@/components/rows/ExamRow';
+import { IconButton } from '@/components/ui/IconButton';
+import { Screen } from '@/components/ui/Screen';
+import { Segmented } from '@/components/ui/Segmented';
+import { SwipeRow } from '@/components/controls/SwipeRow';
+import { T } from '@/components/ui/Text';
 import { all, useCourses, usePendingIds, useQuery } from '@/db';
 import type { Assignment, Exam } from '@/db/schema';
 import { deleteItem, setAssignmentDone } from '@/lib/notifications';
@@ -110,6 +110,7 @@ export default function Tasks() {
 
   const addLabel = tab === 'assignments' ? 'Add assignment' : 'Add exam';
   const addHref = tab === 'assignments' ? '/edit/assignment' : '/edit/exam';
+
   return (
     <Screen
       title="Tasks"

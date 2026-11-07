@@ -2,14 +2,15 @@ import { View } from 'react-native';
 import type { Course, Lecture } from '@/db/schema';
 import { fmtMin } from '@/lib/format';
 import { courseColours, space } from '@/theme';
-import { Card } from './Card';
-import { T } from './Text';
+import { Card } from '@/components/ui/Card';
+import { T } from '@/components/ui/Text';
 
 type Props = { l: Lecture; course?: Course; nowMin?: number; onPress: () => void };
 
 export function LectureRow({ l, course, nowMin, onPress }: Props) {
   const over = nowMin !== undefined && nowMin >= l.endMin;
   const live = nowMin !== undefined && nowMin >= l.startMin && !over;
+
   return (
     <Card
       onPress={onPress}

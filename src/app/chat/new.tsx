@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, Pressable, View } from 'react-native';
-import { Button } from '@/components/Button';
-import { Card } from '@/components/Card';
-import { Field } from '@/components/Field';
-import { Icon } from '@/components/Icon';
-import { Screen } from '@/components/Screen';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Field } from '@/components/ui/Field';
+import { Icon } from '@/components/ui/Icon';
+import { Screen } from '@/components/ui/Screen';
+import { T } from '@/components/ui/Text';
 import { listPeople, openChannel, type Member } from '@/lib/chat';
 import { LIMITS } from '@/lib/chat-parse';
 import { friendlyError } from '@/lib/errors';
@@ -21,6 +21,7 @@ export default function NewChat() {
   const [name, setName] = useState('');
   const [busy, setBusy] = useState(false);
   const [loadError, setLoadError] = useState('');
+
   useEffect(() => {
     void listPeople()
       .then(setPeople)
@@ -30,8 +31,10 @@ export default function NewChat() {
       });
   }, []);
   const shown = (people ?? []).filter((p) => p.displayName.toLowerCase().includes(q.toLowerCase()));
+
   const toggle = (m: Member) =>
     setPicked((v) => (v.some((x) => x.uid === m.uid) ? v.filter((x) => x.uid !== m.uid) : [...v, m]));
+
   const start = async () => {
     setBusy(true);
     try {
@@ -43,6 +46,7 @@ export default function NewChat() {
       setBusy(false);
     }
   };
+
   return (
     <Screen title="New chat" tab={false} right={<Button label="Cancel" kind="ghost" onPress={() => router.back()} />}>
       <View style={{ gap: space[4] }}>

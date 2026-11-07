@@ -5,19 +5,21 @@ import { Pressable, ScrollView, View } from 'react-native';
 import { all, useQuery } from '@/db';
 import { courseLabel } from '@/lib/format';
 import { courseColours, courseFill, hit, radius, space, useColors } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 export function CoursePicker({ value, onChange }: { value: string; onChange: (courseId: string) => void }) {
   const c = useColors();
   const router = useRouter();
   const courses = useQuery(() => all('courses', '1=1', [], 'code ASC'));
   const count = useRef(courses.length);
+
   useEffect(() => {
     const grew = courses.length > count.current;
     count.current = courses.length;
     if (grew) onChange(courses.reduce((a, b) => (b.updatedAt > a.updatedAt ? b : a)).id);
     else if (courses.length && !courses.some((k) => k.id === value)) onChange(courses[0].id);
   }, [courses, value, onChange]);
+
   return (
     <View style={{ gap: space[2] }}>
       <T role="footnote" tone="secondary">

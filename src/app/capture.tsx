@@ -4,8 +4,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, AppState, Linking, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Button } from '@/components/Button';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { T } from '@/components/ui/Text';
 import { friendlyError } from '@/lib/errors';
 import { setPendingPhoto, shrink } from '@/lib/photo';
 import { cameraChrome, gutter, space, useColors } from '@/theme';
@@ -16,11 +16,14 @@ export default function Capture() {
   const c = useColors();
   const router = useRouter();
   const inset = useSafeAreaInsets();
+
   const target = useLocalSearchParams<{ for?: string }>().for ?? '';
   const [perm, request, refresh] = useCameraPermissions();
+
   const cam = useRef<CameraView>(null);
   const [busy, setBusy] = useState(false);
   const [ready, setReady] = useState(false);
+
   useEffect(() => {
     const sub = AppState.addEventListener('change', (s) => {
       if (s === 'active') void refresh();
@@ -44,6 +47,7 @@ export default function Capture() {
   };
 
   if (!perm) return <View style={{ flex: 1, backgroundColor: c.sunken }} />;
+
   if (!perm.granted) {
     return (
       <View style={[s.center, { backgroundColor: c.canvas, paddingTop: inset.top }]}>
@@ -62,6 +66,7 @@ export default function Capture() {
       </View>
     );
   }
+
   return (
     <View style={{ flex: 1, backgroundColor: cameraChrome.backdrop }}>
       <CameraView ref={cam} style={{ flex: 1 }} facing="back" onCameraReady={() => setReady(true)} />
@@ -89,6 +94,7 @@ export default function Capture() {
     </View>
   );
 }
+
 const s = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: gutter },
   bar: { position: 'absolute', left: 0, right: 0, bottom: 0, alignItems: 'center', paddingTop: space[6] },

@@ -8,7 +8,9 @@ export function Card({
   ...rest
 }: ViewProps & { onPress?: () => void; style?: StyleProp<ViewStyle> }) {
   const c = useColors();
+
   const base = [s.card, { backgroundColor: c.elevated, borderColor: c.borderSubtle }, style];
+
   if (onPress) {
     return (
       <Pressable
@@ -21,12 +23,14 @@ export function Card({
       </Pressable>
     );
   }
+
   return (
     <View style={base} {...rest}>
       {children}
     </View>
   );
 }
+
 const s = StyleSheet.create({
   card: { borderRadius: radius.md, borderWidth: StyleSheet.hairlineWidth, padding: space[4], gap: space[2] },
 });

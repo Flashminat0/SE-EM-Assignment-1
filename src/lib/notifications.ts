@@ -30,6 +30,7 @@ const body: Record<Alarm['targetType'], string> = {
 export async function schedule(id: string) {
   await Notifications.cancelScheduledNotificationAsync(id).catch(() => {});
   const a = get('alarms', id);
+
   if (!a || !isActive(id) || (!a.weekly && a.fireAt <= Date.now())) return;
   const d = new Date(a.fireAt);
   await Notifications.scheduleNotificationAsync({
@@ -63,9 +64,11 @@ export async function deleteAlarm(id: string) {
 
 export async function dismissAlarm(id: string) {
   const a = get('alarms', id);
+
   if (!a) return;
   await deleteAlarm(id);
   const l = a.weekly && a.targetType === 'lecture' ? get('lectures', a.targetId) : null;
+
   if (l && !l.deletedAt && l.remind) put('lectures', { ...l, remind: 0 });
 }
 
@@ -77,6 +80,7 @@ const tableOf = { lecture: 'lectures', assignment: 'assignments', exam: 'exams' 
 
 export async function deleteItem(kind: Alarm['targetType'], id: string) {
   await deleteAlarmsFor(kind, id);
+
   if (kind === 'assignment') deletePhoto(get('assignments', id)?.imageUri);
   remove(tableOf[kind], id);
 }
@@ -89,12 +93,14 @@ export async function setReminders(
   label: string,
 ) {
   await deleteAlarmsFor(targetType, targetId);
+
   for (const fireAt of reminderTimes(at, offsets))
     await createAlarm({ targetType, targetId, fireAt, label, weekly: 0 });
 }
 
 export async function setLectureReminder(l: Lecture) {
   await deleteAlarmsFor('lecture', l.id);
+
   if (!l.remind) return;
   const r = lectureReminderAt(l.weekday, l.startMin);
   await createAlarm({
@@ -114,11 +120,13 @@ export const reminderOffsets = (targetType: Alarm['targetType'], targetId: strin
 
 export async function setAssignmentDone(a: Assignment, done: boolean) {
   put('assignments', { ...a, done: done ? 1 : 0 });
+
   for (const alarm of all('alarms', "targetType = 'assignment' AND targetId = ?", [a.id])) await schedule(alarm.id);
 }
 
 export async function snooze(id: string, minutes: number) {
   const a = get('alarms', id);
+
   if (!a || !isActive(id)) return false;
   const row = put('alarms', snoozedAlarm(a, minutes, Date.now(), newId));
   await schedule(row.id);

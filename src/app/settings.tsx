@@ -1,10 +1,10 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
-import { Button } from '@/components/Button';
-import { Card } from '@/components/Card';
-import { Screen } from '@/components/Screen';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { Screen } from '@/components/ui/Screen';
+import { T } from '@/components/ui/Text';
 import { outbox, useQuery } from '@/db';
 import { cachedProfile, ensureProfile, signOut, useUser, type Profile } from '@/lib/auth';
 import { usingEmulators } from '@/lib/firebase';
@@ -21,11 +21,14 @@ export default function Settings() {
   const online = useOnline();
   const [profile, setProfile] = useState<Profile | null>(cachedProfile);
   const [, tick] = useState(0);
+
   useEffect(() => onSyncChange(() => tick((n) => n + 1)), []);
+
   useEffect(() => {
     if (user) void ensureProfile(user).then(setProfile);
   }, [user]);
   const changes = useQuery(outbox.count);
+
   const waiting = changes ? plural(changes, 'change', 'changes') : '';
   const st = syncStatus();
 
@@ -33,6 +36,7 @@ export default function Settings() {
     router.back();
     void signOut();
   };
+
   const confirmSignOut = () => {
     if (!waiting) return doSignOut();
     Alert.alert(

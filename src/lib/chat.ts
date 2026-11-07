@@ -40,24 +40,31 @@ import { friendlyError, userError } from './errors';
 import { auth, firestore } from './firebase';
 
 export type { Channel, Member, Message };
+
 export type Live<T> = { rows: T; error: string | null };
 
 type Doc = QueryDocumentSnapshot<DocumentData>;
 
 const me = () => {
   const u = auth.currentUser;
+
   if (!u) throw userError('You are signed out. Sign in again.');
   return u;
 };
+
 const ms = (t: Timestamp | number | null | undefined) => (typeof t === 'number' ? t : (t?.toMillis?.() ?? Date.now()));
+
 const savedChannels = () => parseChannels(chatCache.read<unknown>('channels'));
 
 const readChannel = (d: Doc) => toChannel(d.id, d.data());
+
 const readMessage = (d: Doc) => {
   const x = d.data({ serverTimestamps: 'estimate' });
   return toMessage(d.id, x, ms(x.createdAt), d.metadata.hasPendingWrites);
 };
+
 const byActivity = (a: Channel, b: Channel) => b.lastMessageAt - a.lastMessageAt;
+
 const byTime = (a: Message, b: Message) => b.createdAt - a.createdAt;
 
 function useLive<T extends { id: string; pending?: boolean }>(
@@ -68,6 +75,7 @@ function useLive<T extends { id: string; pending?: boolean }>(
   order: (a: T, b: T) => number,
 ): Live<T[]> {
   const [state, setState] = useState<Live<T[]>>(() => ({ rows: saved(), error: null }));
+
   useEffect(
     () =>
       onSnapshot(
@@ -118,6 +126,7 @@ export function useMessages(channelId: string): Live<Message[]> {
 
 export function useChannel(id: string): Channel | null {
   const [ch, setCh] = useState<Channel | null>(() => savedChannels().find((c) => c.id === id) ?? null);
+
   useEffect(
     () =>
       onSnapshot(
@@ -150,6 +159,7 @@ export async function listPeople(): Promise<Member[]> {
 async function myself(): Promise<Member> {
   const u = me();
   const p = cachedProfile() ?? (await ensureProfile(u));
+
   if (!p) throw userError('Your profile is not set up yet. Check your connection and try again.');
   return { uid: u.uid, displayName: p.displayName };
 }
@@ -166,14 +176,17 @@ const channelDoc = (kind: 'dm' | 'group', name: string, everyone: Member[]) => (
 
 export async function openChannel(others: Member[], name?: string): Promise<string> {
   const everyone = [await myself(), ...others.map((m) => toMember(m.uid, m))];
+
   if (others.length > 1) {
     const title = (name?.trim() || everyone.map((m) => m.displayName.split(' ')[0]).join(', ')).slice(0, LIMITS.name);
     const r = await addDoc(collection(firestore, 'channels'), channelDoc('group', title, everyone));
     return r.id;
   }
+
   const dm = channelDoc('dm', '', everyone);
   const id = dm.memberIds.join('_');
   const ref = doc(firestore, 'channels', id);
+
   if (!(await getDoc(ref)).exists()) await setDoc(ref, dm);
   return id;
 }
@@ -188,15 +201,18 @@ export async function sendMessage(channelId: string, text: string) {
     text: body,
     createdAt: serverTimestamp(),
   });
+
   batch.update(doc(firestore, 'channels', channelId), {
     lastMessageAt: Date.now(),
     lastMessageText: previewText(body),
   });
+
   await batch.commit();
 }
 
 export function channelTitle(ch: Channel, uid: string) {
   if (ch.kind === 'group') return ch.name || 'Group chat';
   const other = ch.memberIds.find((m) => m !== uid);
+
   return (other && ch.members[other]?.displayName) || 'Direct message';
 }

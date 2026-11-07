@@ -2,7 +2,7 @@ import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/d
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import { fmtDate, fmtDateTime, fmtTime } from '@/lib/format';
 import { hit, radius, space, useColors } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 export function DateTimeField({
   label,
@@ -16,6 +16,7 @@ export function DateTimeField({
   mode?: 'datetime' | 'time' | 'date';
 }) {
   const c = useColors();
+
   if (Platform.OS === 'android') {
     const open = () => {
       const pick = (m: 'date' | 'time', base: Date, next?: (d: Date) => void) =>
@@ -48,6 +49,7 @@ export function DateTimeField({
       </View>
     );
   }
+
   return (
     <View style={[s.row, { borderColor: c.borderSubtle, backgroundColor: c.elevated }]}>
       <T style={{ flex: 1 }}>{label}</T>
@@ -61,6 +63,7 @@ export function DateTimeField({
     </View>
   );
 }
+
 const s = StyleSheet.create({
   box: {
     minHeight: hit + 4,

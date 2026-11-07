@@ -1,7 +1,7 @@
 import { Pressable } from 'react-native';
 import type { SFSymbol } from 'expo-symbols';
 import { hit } from '@/theme';
-import { Icon } from './Icon';
+import { Icon } from '@/components/ui/Icon';
 
 type Props = {
   sf: SFSymbol;

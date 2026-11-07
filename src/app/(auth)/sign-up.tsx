@@ -1,16 +1,18 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Button } from '@/components/Button';
-import { Field } from '@/components/Field';
-import { Screen } from '@/components/Screen';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { Field } from '@/components/ui/Field';
+import { Screen } from '@/components/ui/Screen';
+import { T } from '@/components/ui/Text';
 import { authError, signUp } from '@/lib/auth';
 import { space } from '@/theme';
 
 // Limits set by Firebase Auth and the rules.
 const MIN_PASSWORD = 6;
+
 const MAX_NAME = 80;
+
 const list = (items: string[]) =>
   items.length > 1 ? `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}` : items[0];
 
@@ -21,12 +23,14 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+
   // Why the button is greyed out.
   const missing = [
     !name.trim() && 'your name',
     !email.trim() && 'your email address',
     password.length < MIN_PASSWORD && `a password of at least ${MIN_PASSWORD} characters`,
   ].filter((m): m is string => !!m);
+
   const go = async () => {
     setBusy(true);
     setError('');
@@ -38,6 +42,7 @@ export default function SignUp() {
       setBusy(false);
     }
   };
+
   return (
     <Screen title="Create account" right={<Button label="Back" kind="ghost" onPress={() => router.back()} />}>
       <View style={{ gap: space[5] }}>

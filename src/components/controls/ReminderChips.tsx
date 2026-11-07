@@ -2,7 +2,7 @@ import * as Haptics from 'expo-haptics';
 import { Pressable, View } from 'react-native';
 import { reminderOptions, reminderPassed } from '@/lib/reminders';
 import { hit, radius, space, useColors } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 export { reminderOptions };
 
@@ -20,13 +20,17 @@ export function ReminderChips({
   onChange: (minutes: number[]) => void;
 }) {
   const c = useColors();
+
   const passed = (m: number) => at !== undefined && now !== undefined && reminderPassed(at, m, now);
+
   const toggle = (m: number) => {
     void Haptics.selectionAsync();
     onChange((value.includes(m) ? value.filter((v) => v !== m) : [...value, m]).sort((a, b) => a - b));
   };
+
   const anyPassed = options.some((o) => passed(o.minutes));
   const noneCanRing = value.length > 0 && value.every(passed);
+
   return (
     <View style={{ gap: space[2] }}>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: space[2] }}>

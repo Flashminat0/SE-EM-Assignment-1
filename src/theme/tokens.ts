@@ -1,9 +1,13 @@
 import type { TextStyle } from 'react-native';
 
 export const space = { 1: 4, 2: 8, 3: 12, 4: 16, 5: 20, 6: 24, 8: 32, 10: 40, 12: 48 } as const;
+
 export const gutter = space[5];
+
 export const radius = { sm: 8, md: 14, lg: 22, pill: 999 } as const;
+
 export const hit = 44;
+
 export const rowMinHeight = 56;
 
 export const typography = {
@@ -16,6 +20,7 @@ export const typography = {
   footnote: { fontSize: 13, lineHeight: 18, fontWeight: '400' },
   caption: { fontSize: 12, lineHeight: 16, fontWeight: '500' },
 } as const satisfies Record<string, TextStyle>;
+
 export type TypeRole = keyof typeof typography;
 
 export const courseColours = [
@@ -28,6 +33,7 @@ export const courseColours = [
   '#0E8FC7', // sky
   '#E0702A', // orange
 ] as const;
+
 export type CourseColourIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export const courseFill = { tag: '22', block: '26' } as const;
@@ -52,4 +58,5 @@ export const colors = {
   borderSubtle: '#2A2C31',
   borderStrong: '#3C3F46',
 };
+
 export type Colors = typeof colors;

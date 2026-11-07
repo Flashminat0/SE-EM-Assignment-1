@@ -2,7 +2,7 @@ import * as Haptics from 'expo-haptics';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { dateOfWeekday, weekdays } from '@/lib/format';
 import { hit, radius, space, useColors } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 export function WeekStrip({
   value,
@@ -20,7 +20,9 @@ export function WeekStrip({
   onChange: (weekday: number) => void;
 }) {
   const c = useColors();
+
   const order = startOnMonday ? [1, 2, 3, 4, 5, 6, 0] : [0, 1, 2, 3, 4, 5, 6];
+
   return (
     <View style={s.row} accessibilityRole="tablist">
       {order.map((d) => {
@@ -64,6 +66,7 @@ export function WeekStrip({
     </View>
   );
 }
+
 const s = StyleSheet.create({
   row: { flexDirection: 'row', gap: space[1] },
   day: {

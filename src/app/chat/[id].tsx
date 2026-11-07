@@ -1,12 +1,12 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Alert, FlatList, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Bubble } from '@/components/Bubble';
-import { Button } from '@/components/Button';
-import { Composer } from '@/components/Composer';
-import { IconButton } from '@/components/IconButton';
-import { OfflineBanner } from '@/components/OfflineBanner';
-import { T } from '@/components/Text';
+import { Bubble } from '@/components/chat/Bubble';
+import { Button } from '@/components/ui/Button';
+import { Composer } from '@/components/chat/Composer';
+import { IconButton } from '@/components/ui/IconButton';
+import { OfflineBanner } from '@/components/ui/OfflineBanner';
+import { T } from '@/components/ui/Text';
 import { blockState, channelTitle, setBlocked, useChannel, useMessages } from '@/lib/chat';
 import { friendlyError } from '@/lib/errors';
 import { auth } from '@/lib/firebase';
@@ -18,15 +18,18 @@ export default function Conversation() {
   const router = useRouter();
   const inset = useSafeAreaInsets();
   const online = useOnline();
+
   const { id } = useLocalSearchParams<{ id: string }>();
   const uid = auth.currentUser?.uid ?? '';
   const channel = useChannel(id);
   const { rows: messages, error } = useMessages(id);
+
   const blocked = channel ? blockState(channel, uid) : 'none';
   const title = channel ? channelTitle(channel, uid) : '';
 
   const block = (on: boolean) =>
     setBlocked(id, on).catch((e) => Alert.alert(on ? 'Could not block' : 'Could not unblock', friendlyError(e)));
+
   const confirmBlock = () =>
     Alert.alert(`Block ${title}?`, 'Neither of you can send messages until you unblock.', [
       { text: 'Cancel', style: 'cancel' },

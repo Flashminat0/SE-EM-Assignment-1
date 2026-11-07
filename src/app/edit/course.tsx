@@ -1,14 +1,14 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
-import { ColourPicker } from '@/components/ColourPicker';
-import { Field } from '@/components/Field';
-import { T } from '@/components/Text';
+import { ColourPicker } from '@/components/controls/ColourPicker';
+import { Field } from '@/components/ui/Field';
+import { T } from '@/components/ui/Text';
 import { all, get, put, remove } from '@/db';
 import { newId } from '@/lib/id';
 import { deleteItem } from '@/lib/notifications';
 import { space } from '@/theme';
-import { Form, param } from '@/components/Form';
+import { Form, param } from '@/components/ui/Form';
 
 export default function EditCourse() {
   const id = param(useLocalSearchParams<{ id?: string }>().id);
@@ -27,6 +27,7 @@ export default function EditCourse() {
       lecturerName: lecturerName.trim(),
       colour,
     });
+
   const del = async () => {
     if (!existing) return;
     for (const l of all('lectures', 'courseId = ?', [existing.id])) await deleteItem('lecture', l.id);

@@ -4,20 +4,22 @@ import type { Assignment, Course } from '@/db/schema';
 import { fmtDate, fmtTime, relative } from '@/lib/format';
 import { setAssignmentDone } from '@/lib/notifications';
 import { space, useColors } from '@/theme';
-import { Card } from './Card';
-import { CourseTag } from './CourseTag';
-import { DoneCircle } from './DoneCircle';
-import { Icon } from './Icon';
-import { PendingMark } from './PendingMark';
-import { T } from './Text';
+import { Card } from '@/components/ui/Card';
+import { CourseTag } from '@/components/controls/CourseTag';
+import { DoneCircle } from '@/components/controls/DoneCircle';
+import { Icon } from '@/components/ui/Icon';
+import { PendingMark } from '@/components/ui/PendingMark';
+import { T } from '@/components/ui/Text';
 
 type Props = { a: Assignment; course?: Course; now: number; pending?: boolean };
 
 export function AssignmentRow({ a, course, now, pending }: Props) {
   const c = useColors();
   const router = useRouter();
+
   const done = !!a.done;
   const status = done ? 'done' : relative(a.dueAt, now);
+
   return (
     <Card
       onPress={() => router.push({ pathname: '/edit/assignment', params: { id: a.id } })}

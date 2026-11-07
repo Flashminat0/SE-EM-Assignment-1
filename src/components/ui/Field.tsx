@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AccessibilityInfo, StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
 import { hit, radius, space, typography, useColors } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 export function Field({
   label,
@@ -13,9 +13,11 @@ export function Field({
 }: TextInputProps & { label: string; error?: string; hint?: string }) {
   const c = useColors();
   const [focus, setFocus] = useState(false);
+
   useEffect(() => {
     if (error) AccessibilityInfo.announceForAccessibilityWithOptions(error, { queue: true });
   }, [error]);
+
   return (
     <View style={{ gap: space[2] }}>
       <T role="footnote" tone="secondary">
@@ -57,6 +59,7 @@ export function Field({
     </View>
   );
 }
+
 const s = StyleSheet.create({
   input: {
     minHeight: hit + 4,

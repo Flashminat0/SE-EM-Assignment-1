@@ -1,6 +1,7 @@
 export type Base = { id: string; updatedAt: number; deletedAt: number | null };
 
 export type Course = Base & { code: string; name: string; colour: number; lecturerName: string };
+
 export type Lecture = Base & {
   courseId: string;
   weekday: number;
@@ -9,6 +10,7 @@ export type Lecture = Base & {
   room: string;
   remind: number;
 };
+
 export type Assignment = Base & {
   courseId: string;
   title: string;
@@ -18,6 +20,7 @@ export type Assignment = Base & {
   imageUri: string | null;
   createdAt: number;
 };
+
 export type Exam = Base & {
   courseId: string;
   title: string;
@@ -26,6 +29,7 @@ export type Exam = Base & {
   notes: string;
   createdAt: number;
 };
+
 export type Alarm = Base & {
   targetType: 'assignment' | 'exam' | 'lecture';
   targetId: string;
@@ -41,7 +45,9 @@ export type Tables = {
   exams: Exam;
   alarms: Alarm;
 };
+
 export type TableName = keyof Tables;
+
 export const tableNames: TableName[] = ['courses', 'lectures', 'assignments', 'exams', 'alarms'];
 
 export const localOnly: Record<TableName, string[]> = {
@@ -58,6 +64,7 @@ export const selectLive = (table: TableName, where = '1=1', order = 'updatedAt D
 export const activeAlarm = `NOT EXISTS (SELECT 1 FROM assignments t WHERE alarms.targetType = 'assignment' AND t.id = alarms.targetId AND (t.deletedAt IS NOT NULL OR t.done = 1))
   AND NOT EXISTS (SELECT 1 FROM exams t WHERE alarms.targetType = 'exam' AND t.id = alarms.targetId AND t.deletedAt IS NOT NULL)
   AND NOT EXISTS (SELECT 1 FROM lectures t WHERE alarms.targetType = 'lecture' AND t.id = alarms.targetId AND t.deletedAt IS NOT NULL)`;
+
 export const upcomingAlarm = `${activeAlarm} AND (weekly = 1 OR fireAt > ?)`;
 
 export const DDL = `

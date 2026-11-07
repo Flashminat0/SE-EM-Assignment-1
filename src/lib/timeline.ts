@@ -21,6 +21,7 @@ type Data = {
 };
 
 const DAY = 86_400_000;
+
 const minuteOf = (ms: number) => {
   const d = new Date(ms);
   return d.getHours() * 60 + d.getMinutes();
@@ -74,6 +75,7 @@ export function daySummary(items: TimelineItem[]) {
     const n = items.filter((i) => i.kind === kind).length;
     return n ? `${n} ${word}${n > 1 ? 's' : ''}` : '';
   };
+
   return (
     [count('lecture', 'lecture'), count('assignment', 'deadline'), count('exam', 'exam')].filter(Boolean).join(', ') ||
     'free'

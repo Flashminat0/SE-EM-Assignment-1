@@ -1,10 +1,11 @@
 import { View } from 'react-native';
 import { courseLabel } from '@/lib/format';
 import { courseColours, courseFill, radius, space } from '@/theme';
-import { T } from './Text';
+import { T } from '@/components/ui/Text';
 
 export function CourseTag({ code, name, colour }: { code: string; name: string; colour: number }) {
   const tint = courseColours[colour % courseColours.length];
+
   return (
     <View
       style={{

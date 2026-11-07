@@ -3,6 +3,7 @@ import { AppState } from 'react-native';
 
 export function useNow(everyMs = 60_000) {
   const [now, setNow] = useState(Date.now);
+
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), everyMs);
     const sub = AppState.addEventListener('change', (s) => {

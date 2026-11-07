@@ -1,17 +1,18 @@
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
-import { Button } from '@/components/Button';
-import { Card } from '@/components/Card';
-import { CourseTag } from '@/components/CourseTag';
-import { EmptyState } from '@/components/EmptyState';
-import { Screen } from '@/components/Screen';
-import { T } from '@/components/Text';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { CourseTag } from '@/components/controls/CourseTag';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { Screen } from '@/components/ui/Screen';
+import { T } from '@/components/ui/Text';
 import { all, useQuery } from '@/db';
 import { space } from '@/theme';
 
 export default function Courses() {
   const router = useRouter();
   const courses = useQuery(() => all('courses', '1=1', [], 'code ASC'));
+
   return (
     <Screen title="Courses" tab={false} right={<Button label="Done" kind="ghost" onPress={() => router.back()} />}>
       {courses.length === 0 ? (

@@ -1,9 +1,11 @@
 import { useColors } from '@/theme';
-import { Icon } from './Icon';
+import { Icon } from '@/components/ui/Icon';
 
 export function PendingMark({ pending }: { pending: boolean }) {
   const c = useColors();
+
   if (!pending) return null;
+
   return (
     <Icon
       sf="clock.arrow.circlepath"

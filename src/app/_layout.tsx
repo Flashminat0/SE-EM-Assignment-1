@@ -15,6 +15,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const user = useUser();
   const router = useRouter();
+
   const navTheme = {
     ...DarkTheme,
     colors: {
@@ -48,6 +49,7 @@ export default function RootLayout() {
   }, [user]);
 
   const signedIn = !!user;
+
   useEffect(() => {
     if (!signedIn) return;
     const open = (n: Notifications.Notification) => {
@@ -98,6 +100,7 @@ export default function RootLayout() {
     </GestureHandlerRootView>
   );
 }
+
 const sheet: ComponentProps<typeof Stack.Screen>['options'] = {
   presentation: 'formSheet',
   sheetAllowedDetents: [0.9, 1],
