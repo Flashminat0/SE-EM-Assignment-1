@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AppState } from 'react-native';
 
+// Once a minute is enough for countdowns
 export function useNow(everyMs = 60_000) {
   const [now, setNow] = useState(Date.now);
 

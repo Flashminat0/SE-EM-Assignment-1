@@ -11,6 +11,7 @@ import { T } from '@/components/ui/Text';
 
 const SEND = 36;
 
+// Show the counter only near the limit; nobody needs it at 12 characters
 const COUNT_FROM = LIMITS.text - 200;
 
 export function Composer({ channelId }: { channelId: string }) {

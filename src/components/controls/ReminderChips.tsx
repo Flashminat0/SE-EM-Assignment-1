@@ -29,6 +29,7 @@ export function ReminderChips({
   };
 
   const anyPassed = options.some((o) => passed(o.minutes));
+  // Saving a task whose every reminder is in the past would ring nothing
   const noneCanRing = value.length > 0 && value.every(passed);
 
   return (

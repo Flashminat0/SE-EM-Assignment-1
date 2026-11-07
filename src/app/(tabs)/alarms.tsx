@@ -15,6 +15,7 @@ import { createAlarm, dismissAlarm } from '@/lib/notifications';
 import { useNow } from '@/lib/useNow';
 import { space, useColors } from '@/theme';
 
+// An alarm whose item was deleted opens nothing
 function itemHref(a: Alarm): Href | null {
   if (a.targetType === 'assignment' && get('assignments', a.targetId))
     return { pathname: '/edit/assignment', params: { id: a.targetId } };
@@ -37,6 +38,7 @@ export default function Alarms() {
   );
   const pending = usePendingIds('alarms');
 
+  // Quick way to show a real notification without waiting for a deadline
   const test = () =>
     void createAlarm({
       targetType: 'assignment',

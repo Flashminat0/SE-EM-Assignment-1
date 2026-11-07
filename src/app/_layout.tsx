@@ -32,6 +32,7 @@ export default function RootLayout() {
     if (user !== undefined) void SplashScreen.hideAsync();
   }, [user]);
 
+  // Wipe another account's data before anything reads it, then start syncing
   useEffect(() => {
     if (!user) return;
     let stopSync: (() => void) | undefined;
@@ -50,6 +51,7 @@ export default function RootLayout() {
 
   const signedIn = !!user;
 
+  // Alarm notifications open the ringing screen, from the foreground or a tap
   useEffect(() => {
     if (!signedIn) return;
     const open = (n: Notifications.Notification) => {
@@ -87,6 +89,7 @@ export default function RootLayout() {
             <Stack.Screen name="chat/[id]" />
             <Stack.Screen name="chat/new" options={{ presentation: 'modal' }} />
             <Stack.Screen name="capture" options={{ presentation: 'fullScreenModal', animation: 'fade' }} />
+            {/* No swipe-to-dismiss: an alarm has to be snoozed or dismissed */}
             <Stack.Screen
               name="alarm/[id]"
               options={{ presentation: 'fullScreenModal', animation: 'fade', gestureEnabled: false }}

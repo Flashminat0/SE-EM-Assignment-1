@@ -67,6 +67,7 @@ const byActivity = (a: Channel, b: Channel) => b.lastMessageAt - a.lastMessageAt
 
 const byTime = (a: Message, b: Message) => b.createdAt - a.createdAt;
 
+// Cached snapshots are merged over what we had; only server data is saved
 function useLive<T extends { id: string; pending?: boolean }>(
   key: string,
   q: Query,
@@ -184,7 +185,7 @@ export async function openChannel(others: Member[], name?: string): Promise<stri
   }
 
   const dm = channelDoc('dm', '', everyone);
-  const id = dm.memberIds.join('_');
+  const id = dm.memberIds.join('_'); // the rules require this id for a DM
   const ref = doc(firestore, 'channels', id);
 
   if (!(await getDoc(ref)).exists()) await setDoc(ref, dm);
@@ -194,6 +195,7 @@ export async function openChannel(others: Member[], name?: string): Promise<stri
 export async function sendMessage(channelId: string, text: string) {
   const self = await myself();
   const body = text.slice(0, LIMITS.text);
+  // Message and preview in one batch, so the list never shows a preview with no message
   const batch = writeBatch(firestore);
   batch.set(doc(collection(firestore, 'channels', channelId, 'messages')), {
     senderId: self.uid,

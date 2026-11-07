@@ -3,6 +3,7 @@ export function mergeRemote<T extends { updatedAt: number }>(
   remote: T,
   localOnly: readonly string[],
 ): T | null {
+  // A tie keeps local: it is almost always our own push coming back
   if (local && local.updatedAt >= remote.updatedAt) return null;
   const merged: Record<string, unknown> = { ...remote };
 

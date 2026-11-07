@@ -21,6 +21,7 @@ export function reminderTimes(at: number, offsetsMin: number[], now = Date.now()
 
 export const reminderPassed = (at: number, offsetMin: number, now: number) => at - offsetMin * MIN <= now;
 
+// A task due in an hour cannot get "1 day before"; pick something still ahead
 export function defaultOffsets(at: number, now: number, wanted: readonly number[] = [24 * 60]): number[] {
   const ahead = wanted.filter((m) => !reminderPassed(at, m, now));
 
@@ -29,6 +30,7 @@ export function defaultOffsets(at: number, now: number, wanted: readonly number[
   return fallback === undefined ? [] : [fallback];
 }
 
+// Only preset offsets become chips, so a snoozed copy is not re-created on save
 export function offsetsFrom(at: number, fireTimes: number[]): number[] {
   return [...new Set(fireTimes.map((t) => Math.round((at - t) / MIN)))]
     .filter((m) => presets.includes(m))
@@ -41,6 +43,7 @@ export function snoozedAlarm(a: Alarm, minutes: number, now: number, newId: () =
 
 export const LECTURE_REMIND_MIN = 15;
 
+// A lecture at 00:05 is reminded the evening before
 export function lectureReminderAt(weekday: number, startMin: number, before = LECTURE_REMIND_MIN) {
   const m = startMin - before;
   return m >= 0 ? { weekday, minute: m } : { weekday: (weekday + 6) % 7, minute: m + 24 * 60 };

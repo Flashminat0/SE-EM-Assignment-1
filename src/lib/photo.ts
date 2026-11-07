@@ -11,6 +11,7 @@ export async function shrink(uri: string, width: number) {
   return out.uri;
 }
 
+// The camera and the editor swap the photo here instead of through route params
 let pending: { uri: string; for: string } | null = null;
 
 export const setPendingPhoto = (uri: string, target: string) => {
@@ -28,6 +29,7 @@ const DIR = 'photos';
 
 const folder = () => new Directory(Paths.document, DIR);
 
+// Stored as a relative path: the app container path changes on reinstall
 export function keepPhoto(cacheUri: string, rowId: string): string {
   const dir = folder();
 

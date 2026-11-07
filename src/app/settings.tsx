@@ -22,6 +22,7 @@ export default function Settings() {
   const [profile, setProfile] = useState<Profile | null>(cachedProfile);
   const [, tick] = useState(0);
 
+  // Sync status lives outside React; re-render when it changes
   useEffect(() => onSyncChange(() => tick((n) => n + 1)), []);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function Settings() {
   const waiting = changes ? plural(changes, 'change', 'changes') : '';
   const st = syncStatus();
 
+  // Close the sheet first, or it is left open over the sign-in screen
   const doSignOut = () => {
     router.back();
     void signOut();

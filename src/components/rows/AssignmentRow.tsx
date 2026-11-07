@@ -25,6 +25,7 @@ export function AssignmentRow({ a, course, now, pending }: Props) {
       onPress={() => router.push({ pathname: '/edit/assignment', params: { id: a.id } })}
       style={{ flexDirection: 'row', alignItems: 'center', gap: space[3], opacity: done ? 0.7 : 1 }}
     >
+      {/* Tick here does the same as the swipe, for people who prefer a tap */}
       <DoneCircle done={done} onChange={(d) => void setAssignmentDone(a, d)} />
       <View style={{ flex: 1, gap: space[1] }}>
         <T role="headline" numberOfLines={2} style={done ? { textDecorationLine: 'line-through' } : undefined}>

@@ -32,7 +32,7 @@ export function nextUp(now: number, { lectures, assignments, exams, courses }: D
     })),
     ...assignments.map((a) => ({
       kind: 'assignment' as const,
-      from: a.createdAt || a.dueAt - WEEK,
+      from: a.createdAt || a.dueAt - WEEK, // rows from before createdAt existed
       at: a.dueAt,
       title: a.title,
       course: courses[a.courseId],
@@ -49,8 +49,10 @@ export function nextUp(now: number, { lectures, assignments, exams, courses }: D
       href: `/edit/exam?id=${e.id}`,
     })),
   ];
+  // Everything on the same day as the soonest item, so two deadlines both show
   const sorted = all.sort((a, b) => a.at - b.at);
   return sorted.filter((n) => sameDay(n.at, sorted[0].at));
 }
 
+// Never below 3 %, so the ring is visible the moment a task is planned
 export const ringProgress = (n: Next, now: number) => Math.min(1, Math.max(0.03, (now - n.from) / (n.at - n.from)));

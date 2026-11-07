@@ -50,7 +50,7 @@ export function timelineItems(anchor: number, weekday: number, data: Data): Time
         id: a.id,
         kind: 'assignment',
         startMin: minuteOf(a.dueAt),
-        endMin: minuteOf(a.dueAt) + 30,
+        endMin: minuteOf(a.dueAt) + 30, // a deadline has no length; half an hour keeps it tappable
         title: a.title,
         detail: `Due ${fmtTime(a.dueAt)}`,
         done: !!a.done,

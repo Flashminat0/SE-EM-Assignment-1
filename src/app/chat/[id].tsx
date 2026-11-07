@@ -24,6 +24,7 @@ export default function Conversation() {
   const channel = useChannel(id);
   const { rows: messages, error } = useMessages(id);
 
+  // The rules refuse sends while either side has blocked; the UI just mirrors that
   const blocked = channel ? blockState(channel, uid) : 'none';
   const title = channel ? channelTitle(channel, uid) : '';
 
@@ -71,7 +72,7 @@ export default function Conversation() {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <FlatList
           data={messages}
-          inverted
+          inverted // newest at the bottom, scrolled into view
           keyExtractor={(m) => m.id}
           contentContainerStyle={{ paddingHorizontal: gutter, paddingVertical: space[3], gap: space[2] }}
           renderItem={({ item }) => (

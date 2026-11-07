@@ -13,6 +13,7 @@ export function CoursePicker({ value, onChange }: { value: string; onChange: (co
   const courses = useQuery(() => all('courses', '1=1', [], 'code ASC'));
   const count = useRef(courses.length);
 
+  // A course created from "+ New course" should come back selected
   useEffect(() => {
     const grew = courses.length > count.current;
     count.current = courses.length;

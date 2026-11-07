@@ -15,6 +15,7 @@ import { deleteItem, setAssignmentDone } from '@/lib/notifications';
 import { useNow } from '@/lib/useNow';
 import { hit, space, useColors } from '@/theme';
 
+// One flat list: rows plus the Show/Hide toggle between them
 type Row =
   | { key: string; kind: 'assignment'; a: Assignment }
   | { key: string; kind: 'exam'; e: Exam }
@@ -42,6 +43,7 @@ export default function Tasks() {
   const pendingA = usePendingIds('assignments');
   const pendingE = usePendingIds('exams');
 
+  // Deleting hides finished work for good, so the prompt points at Done instead
   const del = (table: 'assignments' | 'exams', id: string) =>
     Alert.alert(
       table === 'assignments' ? 'Delete this assignment?' : 'Delete this exam?',

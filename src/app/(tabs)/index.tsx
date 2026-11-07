@@ -27,11 +27,13 @@ export default function Today() {
   const courses = useCourses();
   const lectures = useQuery(() => all('lectures', 'weekday = ?', [today], 'startMin ASC'), [today]);
   const due = useQuery(() => all('assignments', 'done = 0 AND dueAt >= ?', [now], 'dueAt ASC LIMIT 5'), [now]);
+  // Older overdue work is noise; 30 days is enough to catch up on
   const overdue = useQuery(
     () => all('assignments', 'done = 0 AND dueAt < ? AND dueAt > ?', [now, now - 30 * DAY], 'dueAt DESC LIMIT 3'),
     [now],
   );
   const exams = useQuery(() => all('exams', 'startsAt > ?', [now], 'startsAt ASC LIMIT 3'), [now]);
+  // Next Up looks at every lecture, not just today's: tonight's may be tomorrow's first
   const allLectures = useQuery(() => all('lectures'));
 
   const next = nextUp(now, { lectures: allLectures, assignments: due, exams, courses });
@@ -75,6 +77,7 @@ export default function Today() {
               marginTop: i ? space[3] : 0,
             }}
           >
+            {/* A lecture has no planned date, so no ring */}
             {n.kind === 'lecture' ? (
               <View style={{ width: 112, alignItems: 'center', gap: space[1] }}>
                 <T role="caption" tone="tertiary">

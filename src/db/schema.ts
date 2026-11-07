@@ -50,6 +50,7 @@ export type TableName = keyof Tables;
 
 export const tableNames: TableName[] = ['courses', 'lectures', 'assignments', 'exams', 'alarms'];
 
+// Columns that mean nothing on another phone: stripped on push, kept on pull
 export const localOnly: Record<TableName, string[]> = {
   courses: [],
   lectures: [],
@@ -61,6 +62,7 @@ export const localOnly: Record<TableName, string[]> = {
 export const selectLive = (table: TableName, where = '1=1', order = 'updatedAt DESC') =>
   `SELECT * FROM ${table} WHERE deletedAt IS NULL AND (${where}) ORDER BY ${order}`;
 
+// An alarm is dead once its item is deleted or the assignment is done
 export const activeAlarm = `NOT EXISTS (SELECT 1 FROM assignments t WHERE alarms.targetType = 'assignment' AND t.id = alarms.targetId AND (t.deletedAt IS NOT NULL OR t.done = 1))
   AND NOT EXISTS (SELECT 1 FROM exams t WHERE alarms.targetType = 'exam' AND t.id = alarms.targetId AND t.deletedAt IS NOT NULL)
   AND NOT EXISTS (SELECT 1 FROM lectures t WHERE alarms.targetType = 'lecture' AND t.id = alarms.targetId AND t.deletedAt IS NOT NULL)`;

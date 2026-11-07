@@ -33,6 +33,7 @@ export function toMember(uid: string, v: unknown): Member {
   return { uid, displayName: str(m.displayName, LIMITS.name).trim() || 'Unknown' };
 }
 
+// Cached rows may come from an older app version, so every field is checked
 export function toChannel(id: unknown, v: unknown): Channel | null {
   const d = obj(v);
 

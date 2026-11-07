@@ -14,6 +14,7 @@ export default function SignIn() {
   const [error, setError] = useState<{ field: 'email' | 'password'; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
 
+  // Sign-in errors are shown under the password field, where the eye already is
   const go = async () => {
     if (!email.trim()) {
       setError({ field: 'email', text: 'Enter your email address.' });

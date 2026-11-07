@@ -13,6 +13,7 @@ import { LAST_MINUTE, LECTURE_REMIND_MIN, lectureEndError } from '@/lib/reminder
 import { space, useColors } from '@/theme';
 import { Form, param } from '@/components/ui/Form';
 
+// The picker works in dates, the row stores minutes of the day
 const toMs = (min: number) => {
   const d = new Date();
   d.setHours(Math.floor(min / 60), min % 60, 0, 0);
@@ -73,7 +74,7 @@ export default function EditLecture() {
         onChange={(ms) => {
           const m = toMin(ms);
           setStart(m);
-          if (endMin <= m) setEnd(endFor(m, 60));
+          if (endMin <= m) setEnd(endFor(m, 60)); // keep the end after the start
         }}
       />
       <View style={{ gap: space[2] }}>

@@ -32,6 +32,7 @@ export default function EditExam() {
   const [startsAt, setStartsAt] = useState(existing?.startsAt ?? nextWeek9am());
   const [venue, setVenue] = useState(existing?.venue ?? '');
   const [notes, setNotes] = useState(existing?.notes ?? '');
+  // Reminders are stored as alarm rows, so an edit reads them back as chips
   const [reminders, setRemindersState] = useState<number[]>(() =>
     existing
       ? reminderOffsets('exam', existing.id, existing.startsAt)

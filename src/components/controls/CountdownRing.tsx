@@ -28,6 +28,7 @@ export function CountdownRing({
   const circ = 2 * Math.PI * r;
   const p = useSharedValue(0);
 
+  // overshootClamping: a spring past 100 % looked like a bug
   useEffect(() => {
     const clamped = Math.min(1, Math.max(0, progress));
     p.value = reduce ? clamped : withSpring(clamped, { damping: 18, stiffness: 90, overshootClamping: true });
@@ -40,6 +41,7 @@ export function CountdownRing({
       accessibilityRole="progressbar"
       accessibilityValue={{ now: Math.round(progress * 100), min: 0, max: 100 }}
     >
+      {/* Rotated so the arc starts at twelve o'clock */}
       <Svg width={size} height={size} style={{ position: 'absolute', transform: [{ rotate: '-90deg' }] }}>
         <Circle cx={size / 2} cy={size / 2} r={r} stroke={c.sunken} strokeWidth={stroke} fill="none" />
         <ACircle

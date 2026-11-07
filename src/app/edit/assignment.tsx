@@ -40,6 +40,7 @@ export default function EditAssignment() {
     existing ? reminderOffsets('assignment', existing.id, existing.dueAt) : defaultOffsets(dueAt, Date.now()),
   );
 
+  // The camera screen leaves the photo here; pick it up when this sheet is back
   useFocusEffect(
     useCallback(() => {
       const p = takePendingPhoto('assignment');
@@ -49,6 +50,7 @@ export default function EditAssignment() {
   const shown = photo ?? (existing?.imageUri ? localPhotoUri(existing.imageUri) : null);
 
   const save = async () => {
+    // Copy out of the camera cache, which iOS clears whenever it likes
     const kept = photo ? keepPhoto(photo, rowId) : null;
     put('assignments', {
       id: rowId,
@@ -58,7 +60,7 @@ export default function EditAssignment() {
       notes: notes.trim(),
       done: existing?.done ?? 0,
       imageUri: kept ?? existing?.imageUri ?? null,
-      createdAt: existing?.createdAt || Date.now(),
+      createdAt: existing?.createdAt || Date.now(), // the ring counts from here
     });
     if (kept && existing?.imageUri) deletePhoto(existing.imageUri);
     const course = get('courses', courseId);

@@ -28,6 +28,7 @@ export function fmtDate(ms: number) {
 
 export const fmtDateTime = (ms: number) => `${fmtDate(ms)} · ${fmtTime(ms)}`;
 
+// Under a day: hours. Beyond: calendar days, so 11 PM to 1 AM reads "tomorrow"
 export function relative(ms: number, now = Date.now()) {
   const diff = ms - now,
     abs = Math.abs(diff);
@@ -93,6 +94,7 @@ export const startOfDay = (ms: number) => {
 
 export const isToday = (ms: number) => startOfDay(ms) === startOfDay(Date.now());
 
+// Same weekday with the time already passed means next week
 export function nextOccurrence(weekday: number, startMin: number, from = Date.now()) {
   const d = new Date(from);
   d.setHours(Math.floor(startMin / 60), startMin % 60, 0, 0);

@@ -26,6 +26,7 @@ export function DayTimeline({
   const c = useColors();
   const { fontScale } = useWindowDimensions();
 
+  // Widen the grid for anything outside 7 to 21, such as a midnight deadline
   const first = Math.min(startHour, ...items.map((l) => Math.floor(l.startMin / 60)));
   const last = Math.max(endHour, ...items.map((l) => Math.ceil(l.endMin / 60)));
   const hours = Array.from({ length: last - first + 1 }, (_, i) => first + i);
@@ -49,8 +50,10 @@ export function DayTimeline({
           <View style={[s.line, { backgroundColor: c.borderSubtle }]} />
         </Pressable>
       ))}
+      {/* Drawn after the hour rows, so a tap on a block wins */}
       {items.map((l) => {
         const tint = courseColours[l.colour % courseColours.length];
+        // Short items still need to be tappable
         const height = Math.max(HOUR / 2, y(l.endMin) - y(l.startMin));
         const inner = height - 2 * PAD;
         const name = l.title;

@@ -32,6 +32,7 @@ export function Form({
   const busy = useRef(false);
   const [saving, setSaving] = useState(false);
 
+  // A double tap on Save would write the row twice
   const run = (action: () => unknown, title: string) => {
     if (busy.current) return;
     busy.current = true;

@@ -2,6 +2,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { useEffect, useState } from 'react';
 import { emulatorHost, usingEmulators } from './firebase';
 
+// Against the emulators "online" means they answer, so freezing them is a real offline test
 if (usingEmulators) {
   NetInfo.configure({
     reachabilityUrl: `http://${emulatorHost}:9099/`,

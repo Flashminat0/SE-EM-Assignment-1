@@ -18,6 +18,7 @@ export function Screen({ title, right, children, scroll = true, padded = true, t
   const c = useColors();
   const inset = useSafeAreaInsets();
 
+  // Modal screens already sit below the status bar
   const top = tab || Platform.OS === 'android' ? inset.top : 0;
   const header = title ? (
     <View style={s.header}>

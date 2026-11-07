@@ -34,6 +34,7 @@ export default function Timetable() {
   const courses = useCourses();
   const lectures = useQuery(() => all('lectures', '1=1', [], 'startMin ASC'));
 
+  // Lectures repeat weekly; deadlines and exams are fetched for the shown week only
   const from = dateOfWeekday(anchor, 1),
     to = from + WEEK;
   const assignments = useQuery(() => all('assignments', 'dueAt >= ? AND dueAt < ?', [from, to]), [from]);
@@ -49,7 +50,7 @@ export default function Timetable() {
       params: { weekday: String(day), ...(startMin !== undefined ? { startMin: String(startMin) } : {}) },
     });
   const open = (i: TimelineItem) => router.push({ pathname: `/edit/${i.kind}`, params: { id: i.id } });
-  // Fling left: next week. Right: previous.
+  // Fling on the strip moves a week; the grid below keeps its own scroll
   const swipe = Gesture.Race(
     Gesture.Fling()
       .direction(Directions.LEFT)

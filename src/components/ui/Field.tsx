@@ -14,6 +14,7 @@ export function Field({
   const c = useColors();
   const [focus, setFocus] = useState(false);
 
+  // VoiceOver does not read a new error on its own
   useEffect(() => {
     if (error) AccessibilityInfo.announceForAccessibilityWithOptions(error, { queue: true });
   }, [error]);

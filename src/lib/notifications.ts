@@ -6,6 +6,7 @@ import { newId } from './id';
 import { deletePhoto } from './photo';
 import { LECTURE_REMIND_MIN, lectureReminderAt, offsetsFrom, reminderTimes, snoozedAlarm } from './reminders';
 
+// Alarms open their own screen, so no banner on top when the app is open
 Notifications.setNotificationHandler({
   handleNotification: async (n) => ({
     shouldShowBanner: typeof n.request.content.data?.alarmId !== 'string',
@@ -27,6 +28,7 @@ const body: Record<Alarm['targetType'], string> = {
   assignment: 'Assignment reminder',
 };
 
+// The alarm id is the notification id, so rescheduling replaces rather than doubles
 export async function schedule(id: string) {
   await Notifications.cancelScheduledNotificationAsync(id).catch(() => {});
   const a = get('alarms', id);
@@ -62,6 +64,7 @@ export async function deleteAlarm(id: string) {
   await schedule(id); // cancels, since the row is now deleted
 }
 
+// Dismissing a weekly lecture reminder means stop, so the switch goes off
 export async function dismissAlarm(id: string) {
   const a = get('alarms', id);
 
@@ -124,6 +127,7 @@ export async function setAssignmentDone(a: Assignment, done: boolean) {
   for (const alarm of all('alarms', "targetType = 'assignment' AND targetId = ?", [a.id])) await schedule(alarm.id);
 }
 
+// A snooze is a one-off copy; the weekly reminder keeps its rhythm
 export async function snooze(id: string, minutes: number) {
   const a = get('alarms', id);
 

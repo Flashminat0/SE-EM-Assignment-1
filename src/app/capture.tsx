@@ -24,6 +24,7 @@ export default function Capture() {
   const [busy, setBusy] = useState(false);
   const [ready, setReady] = useState(false);
 
+  // Coming back from Settings does not re-run the permission hook by itself
   useEffect(() => {
     const sub = AppState.addEventListener('change', (s) => {
       if (s === 'active') void refresh();
@@ -37,6 +38,7 @@ export default function Capture() {
     void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     try {
       const pic = await cam.current.takePictureAsync({ quality: 0.9 });
+      // Full-size photos are several MB; a brief is readable at 1280 px
       setPendingPhoto(await shrink(pic.uri, Math.min(MAX_WIDTH, pic.width)), target);
       router.back();
     } catch (e) {
@@ -69,6 +71,7 @@ export default function Capture() {
 
   return (
     <View style={{ flex: 1, backgroundColor: cameraChrome.backdrop }}>
+      {/* takePictureAsync throws if the camera is still warming up */}
       <CameraView ref={cam} style={{ flex: 1 }} facing="back" onCameraReady={() => setReady(true)} />
       <View style={[s.bar, { paddingBottom: inset.bottom + space[6] }]}>
         <Button

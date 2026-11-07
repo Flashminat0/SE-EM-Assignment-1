@@ -41,6 +41,7 @@ export const cachedProfile = (): Profile | null => {
 
 const cleanName = (name: string) => name.trim().slice(0, LIMITS.name).trim();
 
+// onAuthStateChanged fires before the profile write lands; ensureProfile waits for it
 let signingUp: Promise<unknown> | null = null;
 
 export async function signUp(displayName: string, email: string, password: string) {
@@ -76,6 +77,7 @@ export async function ensureProfile(user: User): Promise<Profile | null> {
         'Student',
       createdAt: typeof data?.createdAt === 'number' ? data.createdAt : Date.now(),
     };
+    // Repair old profiles so the chat rules keep accepting the name
     const dirty = !data || Object.keys(data).some((k) => !(k in clean)) || data.displayName !== clean.displayName;
     if (dirty) await setDoc(profileRef(user.uid), clean);
     return cache(clean);
@@ -96,6 +98,7 @@ export async function signOut() {
   await fbSignOut(auth);
 }
 
+// Firebase can end a session without signOut running, so check who owns the data
 export async function claimLocalData(uid: string) {
   const owner = meta.get('owner');
 

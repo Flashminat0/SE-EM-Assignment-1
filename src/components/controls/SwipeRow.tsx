@@ -51,6 +51,7 @@ export function SwipeRow({
         onComplete ? () => action(c.done, completeLabel, 'checkmark', 'check', 'flex-start') : undefined
       }
       renderRightActions={onDelete ? () => action(c.overdue, deleteLabel, 'trash', 'delete', 'flex-end') : undefined}
+      // 'right' means the row moved right, i.e. the left (Done) panel is showing
       onSwipeableOpen={(dir) => {
         if (dir === 'right' && onComplete) {
           void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);

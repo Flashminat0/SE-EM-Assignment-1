@@ -39,8 +39,10 @@ export default function AlarmScreen() {
   }, [reduce, pulse]);
   const pulseStyle = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }] }));
 
+  // Opened from a cold-start notification there is nothing to go back to
   const close = () => (router.canGoBack() ? router.back() : router.replace('/(tabs)'));
 
+  // Weekly lecture reminders stay; only one-off alarms are deleted
   const dismiss = () => {
     const one = alarm && !alarm.weekly ? alarm.id : null;
     close();

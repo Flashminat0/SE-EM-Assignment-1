@@ -2,6 +2,7 @@ export type Cursor = { seconds: number; nanoseconds: number };
 
 export const ZERO: Cursor = { seconds: 0, nanoseconds: 0 };
 
+// Kept as text: a Firestore timestamp has nanoseconds, a JS number does not
 export const formatCursor = (c: Cursor) => `${c.seconds}.${String(c.nanoseconds).padStart(9, '0')}`;
 
 export function parseCursor(s: string | null): Cursor | null {

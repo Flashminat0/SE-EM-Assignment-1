@@ -22,6 +22,7 @@ let running = false;
 
 let again = false;
 
+// Bumped on sign-out, so a pass still in flight throws its results away
 let generation = 0;
 
 const status = { syncing: false, lastError: null as string | null, lastAt: 0 };
@@ -45,6 +46,7 @@ const cursorKey = (table: TableName) => `syncedAt:${table}`;
 async function pull(uid: string, table: TableName, gen: number) {
   const cursor = parseCursor(meta.get(cursorKey(table)));
   const ref = collection(firestore, 'users', uid, table);
+  // Server-side cursor: the phone's own clock cannot hide a late offline edit
   const snap = await getDocsFromServer(
     cursor ? query(ref, where('syncedAt', '>', new Timestamp(cursor.seconds, cursor.nanoseconds))) : ref,
   );
@@ -78,6 +80,7 @@ async function pull(uid: string, table: TableName, gen: number) {
 async function push(uid: string, gen: number) {
   const pending = outbox.pending();
 
+  // Firestore caps a batch at 500 writes
   for (let i = 0; i < pending.length; i += 400) {
     const chunk = pending.slice(i, i + 400);
     const batch = writeBatch(firestore);
@@ -91,6 +94,7 @@ async function push(uid: string, gen: number) {
     }
     await batch.commit();
     if (gen !== generation) return;
+    // Only after the commit, or a crash in between would lose the change
     outbox.ack(chunk.map((c) => c.seq));
   }
 }
@@ -111,6 +115,7 @@ export async function runSync() {
   status.lastError = null;
   emit();
 
+  // Pull first: an edit queued offline must meet newer edits before it is pushed
   try {
     do {
       again = false;
@@ -151,6 +156,7 @@ export function startSyncLoop() {
     if (s === 'active') void runSync();
   });
 
+  // Typing in an editor fires several writes; wait for them to settle
   let t: ReturnType<typeof setTimeout> | undefined;
   const offWrites = onLocalWrite(() => {
     clearTimeout(t);

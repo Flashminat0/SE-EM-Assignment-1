@@ -18,6 +18,7 @@ export default function ChatList() {
   const { rows: channels, error } = useChannels();
 
   const uid = auth.currentUser?.uid ?? '';
+  // The list comes from the cache offline, so empty can mean three things
   const empty = !online
     ? 'Chat needs a connection to start. Conversations you opened before stay readable here offline.'
     : error

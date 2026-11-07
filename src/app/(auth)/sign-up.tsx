@@ -24,7 +24,7 @@ export default function SignUp() {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
-  // Why the button is greyed out.
+  // Tell the user why the button is greyed out instead of a silent disable
   const missing = [
     !name.trim() && 'your name',
     !email.trim() && 'your email address',

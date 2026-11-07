@@ -17,7 +17,7 @@ export default function EditCourse() {
   const [code, setCode] = useState(existing?.code ?? '');
   const [name, setName] = useState(existing?.name ?? '');
   const [lecturerName, setLecturer] = useState(existing?.lecturerName ?? '');
-  const [colour, setColour] = useState(existing?.colour ?? all('courses').length % 8);
+  const [colour, setColour] = useState(existing?.colour ?? all('courses').length % 8); // next colour along
 
   const save = () =>
     put('courses', {
@@ -28,6 +28,7 @@ export default function EditCourse() {
       colour,
     });
 
+  // A course takes its lectures, tasks and their alarms with it
   const del = async () => {
     if (!existing) return;
     for (const l of all('lectures', 'courseId = ?', [existing.id])) await deleteItem('lecture', l.id);

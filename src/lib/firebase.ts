@@ -27,6 +27,7 @@ export const app = fresh ? initializeApp(config) : getApp();
 
 export const auth = initializeAuth(app, { persistence: getReactNativePersistence(AsyncStorage) });
 
+// WebSockets drop on some campus networks; long polling always gets through
 export const firestore = initializeFirestore(app, { experimentalForceLongPolling: true });
 
 if (usingEmulators && fresh) {
