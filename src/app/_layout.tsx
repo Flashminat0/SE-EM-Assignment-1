@@ -10,6 +10,7 @@ import { ensurePermission, scheduleAll } from '@/lib/notifications';
 import { startSyncLoop } from '@/lib/sync';
 import { colors } from '@/theme';
 
+// Keep the splash up until we know whether someone is signed in; no sign-in flash
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
