@@ -6,8 +6,6 @@ type Listener = () => void;
 
 type Param = string | number | null;
 
-// --- open ---
-
 export const db = openDatabaseSync('edu-alarm.db');
 db.execSync(DDL);
 
@@ -31,8 +29,6 @@ for (const t of ['assignments', 'exams'] as const) {
     columnCache.delete(t);
   }
 }
-
-// --- change notifications ---
 
 const changeListeners = new Set<Listener>();
 
@@ -59,8 +55,6 @@ const notifyWrite = () => writeListeners.forEach((l) => l());
 
 export const onLocalWrite = (l: Listener) => listen(writeListeners, l);
 
-// --- hooks ---
-
 export function useQuery<T>(query: () => T, deps: readonly (string | number | boolean | null | undefined)[] = []): T {
   const v = useSyncExternalStore(
     (l) => listen(changeListeners, l),
@@ -78,8 +72,6 @@ export const useCourses = () =>
 
 export const usePendingIds = (table: TableName) => useQuery(() => outbox.pendingIds(table), [table]);
 
-// --- reads ---
-
 export function all<K extends TableName>(
   table: K,
   where = '1=1',
@@ -92,8 +84,6 @@ export function all<K extends TableName>(
 export function get<K extends TableName>(table: K, id: string): Tables[K] | null {
   return db.getFirstSync<Tables[K]>(`SELECT * FROM ${table} WHERE id = ?`, [id]);
 }
-
-// --- writes ---
 
 function queueForSync(table: TableName, id: string) {
   db.runSync('INSERT INTO outbox (tbl, rowId, queuedAt) VALUES (?,?,?)', [table, id, Date.now()]);
@@ -141,8 +131,6 @@ export function applyRemote<K extends TableName>(table: K, rows: Tables[K][]) {
   notifyChange();
 }
 
-// --- outbox ---
-
 export const outbox = {
   pending: () =>
     db.getAllSync<{ seq: number; tbl: TableName; rowId: string }>('SELECT seq, tbl, rowId FROM outbox ORDER BY seq'),
@@ -161,8 +149,6 @@ export const outbox = {
     notifyChange();
   },
 };
-
-// --- key-value stores ---
 
 export const meta = {
   get: (key: string) =>
@@ -183,8 +169,6 @@ export const chatCache = {
       Date.now(),
     ]),
 };
-
-// --- sign out ---
 
 export function resetAll() {
   db.withTransactionSync(() => {
